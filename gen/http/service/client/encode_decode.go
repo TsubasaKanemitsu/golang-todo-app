@@ -336,8 +336,10 @@ func DecodeDELETETodoTaskResponse(decoder func(*http.Response) goahttp.Decoder, 
 // *TodoTaskTitleListResponse.
 func unmarshalTodoTaskTitleListResponseToServiceTodoTaskTitleList(v *TodoTaskTitleListResponse) *service.TodoTaskTitleList {
 	res := &service.TodoTaskTitleList{
-		ID:    *v.ID,
-		Title: *v.Title,
+		ID:     *v.ID,
+		Title:  *v.Title,
+		Status: *v.Status,
+		Label:  v.Label,
 	}
 
 	return res

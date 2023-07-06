@@ -41,7 +41,9 @@ type AddTodoTaskPayload struct {
 	// Todoタスクのタイトル
 	Title string
 	// Todoタスクの説明
-	Description *string
+	Contents *string
+	// Todoタスクのラベル
+	Label *string
 	// タスクを割り当てられた人の名前
 	Asignee *string
 	// Todoタスクの開始予定日
@@ -71,7 +73,11 @@ type TodoTaskInfo struct {
 	// Todoタスクのタイトル
 	Title string
 	// Todoタスクの説明
-	Description *string
+	Contents *string
+	// Todoタスクの進捗状況
+	Status string
+	// Todoタスクのラベル
+	Label *string
 	// タスクを割り当てられた人の名前
 	Asignee *string
 	// Todoタスクの開始予定日
@@ -86,6 +92,10 @@ type TodoTaskTitleList struct {
 	ID int
 	// Todoタスクのタイトル
 	Title string
+	// Todoタスクの進捗状況
+	Status string
+	// Todoタスクのラベル
+	Label *string
 }
 
 // UpdateTodoTaskPayload is the payload type of the service service

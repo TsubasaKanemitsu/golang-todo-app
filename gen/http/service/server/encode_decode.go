@@ -189,8 +189,10 @@ func DecodeDELETETodoTaskRequest(mux goahttp.Muxer, decoder func(*http.Request) 
 // *service.TodoTaskTitleList.
 func marshalServiceTodoTaskTitleListToTodoTaskTitleListResponse(v *service.TodoTaskTitleList) *TodoTaskTitleListResponse {
 	res := &TodoTaskTitleListResponse{
-		ID:    v.ID,
-		Title: v.Title,
+		ID:     v.ID,
+		Title:  v.Title,
+		Status: v.Status,
+		Label:  v.Label,
 	}
 
 	return res

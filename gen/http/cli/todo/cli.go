@@ -29,11 +29,12 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` service add-todo-task --body '{
-      "asignee": "Totam earum illo fugit placeat possimus quo.",
-      "description": "Earum illum.",
-      "endDate": "1974-07-16",
-      "startDate": "1984-02-05",
-      "title": "Est accusantium iusto odit consectetur qui."
+      "asignee": "Voluptatem qui assumenda ipsum.",
+      "contents": "Laudantium fugiat iusto eaque placeat officia assumenda.",
+      "end_date": "1970-11-01",
+      "label": "Ut quia error rerum.",
+      "start_date": "2004-04-03",
+      "title": "Quo temporibus dolores voluptas doloremque et aut."
    }'` + "\n" +
 		""
 }
@@ -195,11 +196,12 @@ Todoタスクを追加する。
 
 Example:
     %[1]s service add-todo-task --body '{
-      "asignee": "Totam earum illo fugit placeat possimus quo.",
-      "description": "Earum illum.",
-      "endDate": "1974-07-16",
-      "startDate": "1984-02-05",
-      "title": "Est accusantium iusto odit consectetur qui."
+      "asignee": "Voluptatem qui assumenda ipsum.",
+      "contents": "Laudantium fugiat iusto eaque placeat officia assumenda.",
+      "end_date": "1970-11-01",
+      "label": "Ut quia error rerum.",
+      "start_date": "2004-04-03",
+      "title": "Quo temporibus dolores voluptas doloremque et aut."
    }'
 `, os.Args[0])
 }
@@ -211,7 +213,7 @@ func serviceGetTodoTaskUsage() {
     -id INT: Todo task id
 
 Example:
-    %[1]s service get-todo-task --id 1112647869139866599
+    %[1]s service get-todo-task --id 7690700790349522607
 `, os.Args[0])
 }
 
@@ -232,7 +234,7 @@ func serviceUpdateTodoTaskUsage() {
     -id INT: Todo task id
 
 Example:
-    %[1]s service update-todo-task --id 4485574631747021999
+    %[1]s service update-todo-task --id 6122907014954972101
 `, os.Args[0])
 }
 
@@ -243,6 +245,6 @@ func serviceDELETETodoTaskUsage() {
     -id INT: Todo task id
 
 Example:
-    %[1]s service delete-todo-task --id 1864510905486136735
+    %[1]s service delete-todo-task --id 7521447378485825693
 `, os.Args[0])
 }

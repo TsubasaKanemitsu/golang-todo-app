@@ -18,13 +18,15 @@ type AddTodoTaskRequestBody struct {
 	// Todoタスクのタイトル
 	Title *string `form:"title,omitempty" json:"title,omitempty" xml:"title,omitempty"`
 	// Todoタスクの説明
-	Description *string `form:"description,omitempty" json:"description,omitempty" xml:"description,omitempty"`
+	Contents *string `form:"contents,omitempty" json:"contents,omitempty" xml:"contents,omitempty"`
+	// Todoタスクのラベル
+	Label *string `form:"label,omitempty" json:"label,omitempty" xml:"label,omitempty"`
 	// タスクを割り当てられた人の名前
 	Asignee *string `form:"asignee,omitempty" json:"asignee,omitempty" xml:"asignee,omitempty"`
 	// Todoタスクの開始予定日
-	StartDate *string `form:"startDate,omitempty" json:"startDate,omitempty" xml:"startDate,omitempty"`
+	StartDate *string `form:"start_date,omitempty" json:"start_date,omitempty" xml:"start_date,omitempty"`
 	// Todoタスクの終了予定日
-	EndDate *string `form:"endDate,omitempty" json:"endDate,omitempty" xml:"endDate,omitempty"`
+	EndDate *string `form:"end_date,omitempty" json:"end_date,omitempty" xml:"end_date,omitempty"`
 }
 
 // GetTodoTaskResponseBody is the type of the "service" service "GetTodoTask"
@@ -35,13 +37,17 @@ type GetTodoTaskResponseBody struct {
 	// Todoタスクのタイトル
 	Title string `form:"title" json:"title" xml:"title"`
 	// Todoタスクの説明
-	Description *string `form:"description,omitempty" json:"description,omitempty" xml:"description,omitempty"`
+	Contents *string `form:"contents,omitempty" json:"contents,omitempty" xml:"contents,omitempty"`
+	// Todoタスクの進捗状況
+	Status string `form:"status" json:"status" xml:"status"`
+	// Todoタスクのラベル
+	Label *string `form:"label,omitempty" json:"label,omitempty" xml:"label,omitempty"`
 	// タスクを割り当てられた人の名前
 	Asignee *string `form:"asignee,omitempty" json:"asignee,omitempty" xml:"asignee,omitempty"`
 	// Todoタスクの開始予定日
-	StartDate *string `form:"startDate,omitempty" json:"startDate,omitempty" xml:"startDate,omitempty"`
+	StartDate *string `form:"start_date,omitempty" json:"start_date,omitempty" xml:"start_date,omitempty"`
 	// Todoタスクの終了予定日
-	EndDate *string `form:"endDate,omitempty" json:"endDate,omitempty" xml:"endDate,omitempty"`
+	EndDate *string `form:"end_date,omitempty" json:"end_date,omitempty" xml:"end_date,omitempty"`
 }
 
 // GetTodoTaskListResponseBody is the type of the "service" service
@@ -54,18 +60,24 @@ type TodoTaskTitleListResponse struct {
 	ID int `form:"id" json:"id" xml:"id"`
 	// Todoタスクのタイトル
 	Title string `form:"title" json:"title" xml:"title"`
+	// Todoタスクの進捗状況
+	Status string `form:"status" json:"status" xml:"status"`
+	// Todoタスクのラベル
+	Label *string `form:"label,omitempty" json:"label,omitempty" xml:"label,omitempty"`
 }
 
 // NewGetTodoTaskResponseBody builds the HTTP response body from the result of
 // the "GetTodoTask" endpoint of the "service" service.
 func NewGetTodoTaskResponseBody(res *service.TodoTaskInfo) *GetTodoTaskResponseBody {
 	body := &GetTodoTaskResponseBody{
-		ID:          res.ID,
-		Title:       res.Title,
-		Description: res.Description,
-		Asignee:     res.Asignee,
-		StartDate:   res.StartDate,
-		EndDate:     res.EndDate,
+		ID:        res.ID,
+		Title:     res.Title,
+		Contents:  res.Contents,
+		Status:    res.Status,
+		Label:     res.Label,
+		Asignee:   res.Asignee,
+		StartDate: res.StartDate,
+		EndDate:   res.EndDate,
 	}
 	return body
 }
@@ -83,11 +95,12 @@ func NewGetTodoTaskListResponseBody(res []*service.TodoTaskTitleList) GetTodoTas
 // NewAddTodoTaskPayload builds a service service addTodoTask endpoint payload.
 func NewAddTodoTaskPayload(body *AddTodoTaskRequestBody) *service.AddTodoTaskPayload {
 	v := &service.AddTodoTaskPayload{
-		Title:       *body.Title,
-		Description: body.Description,
-		Asignee:     body.Asignee,
-		StartDate:   *body.StartDate,
-		EndDate:     *body.EndDate,
+		Title:     *body.Title,
+		Contents:  body.Contents,
+		Label:     body.Label,
+		Asignee:   body.Asignee,
+		StartDate: *body.StartDate,
+		EndDate:   *body.EndDate,
 	}
 
 	return v
@@ -126,16 +139,16 @@ func ValidateAddTodoTaskRequestBody(body *AddTodoTaskRequestBody) (err error) {
 		err = goa.MergeErrors(err, goa.MissingFieldError("title", "body"))
 	}
 	if body.StartDate == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("startDate", "body"))
+		err = goa.MergeErrors(err, goa.MissingFieldError("start_date", "body"))
 	}
 	if body.EndDate == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("endDate", "body"))
+		err = goa.MergeErrors(err, goa.MissingFieldError("end_date", "body"))
 	}
 	if body.StartDate != nil {
-		err = goa.MergeErrors(err, goa.ValidateFormat("body.startDate", *body.StartDate, goa.FormatDate))
+		err = goa.MergeErrors(err, goa.ValidateFormat("body.start_date", *body.StartDate, goa.FormatDate))
 	}
 	if body.EndDate != nil {
-		err = goa.MergeErrors(err, goa.ValidateFormat("body.endDate", *body.EndDate, goa.FormatDate))
+		err = goa.MergeErrors(err, goa.ValidateFormat("body.end_date", *body.EndDate, goa.FormatDate))
 	}
 	return
 }

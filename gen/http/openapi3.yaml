@@ -20,11 +20,12 @@ paths:
                         schema:
                             $ref: '#/components/schemas/AddTodoTaskRequestBody'
                         example:
-                            asignee: Totam earum illo fugit placeat possimus quo.
-                            description: Earum illum.
-                            endDate: "1974-07-16"
-                            startDate: "1984-02-05"
-                            title: Est accusantium iusto odit consectetur qui.
+                            asignee: Voluptatem qui assumenda ipsum.
+                            contents: Laudantium fugiat iusto eaque placeat officia assumenda.
+                            end_date: "1970-11-01"
+                            label: Ut quia error rerum.
+                            start_date: "2004-04-03"
+                            title: Quo temporibus dolores voluptas doloremque et aut.
             responses:
                 "200":
                     description: OK response.
@@ -32,8 +33,8 @@ paths:
                         application/json:
                             schema:
                                 type: boolean
-                                example: false
-                            example: true
+                                example: true
+                            example: false
     /todo/{id}:
         delete:
             tags:
@@ -49,9 +50,9 @@ paths:
                   schema:
                     type: integer
                     description: Todo task id
-                    example: 7936699549283312990
+                    example: 1515767968551375855
                     format: int64
-                  example: 2517139906503681894
+                  example: 8928990878676657841
             responses:
                 "200":
                     description: OK response.
@@ -59,7 +60,7 @@ paths:
                         application/json:
                             schema:
                                 type: boolean
-                                example: false
+                                example: true
                             example: true
         get:
             tags:
@@ -75,9 +76,9 @@ paths:
                   schema:
                     type: integer
                     description: Todo task id
-                    example: 5707356597525600621
+                    example: 2174113226990406773
                     format: int64
-                  example: 8060140130348412978
+                  example: 4057730328338671830
             responses:
                 "200":
                     description: OK response.
@@ -86,12 +87,14 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/TodoTaskInfo'
                             example:
-                                asignee: Corrupti alias culpa nobis est.
-                                description: Quis aliquam.
-                                endDate: "1973-04-01"
-                                id: 4576473736897959510
-                                startDate: "2005-04-05"
-                                title: Autem occaecati nulla qui ipsa molestiae.
+                                asignee: Ut laudantium.
+                                contents: Dolor eius vel cupiditate magnam saepe mollitia.
+                                end_date: "2009-08-02"
+                                id: 6101361518690907080
+                                label: Ut culpa itaque quae commodi porro maxime.
+                                start_date: "2015-04-02"
+                                status: Aut dolore.
+                                title: A ipsam delectus qui ducimus enim.
         put:
             tags:
                 - service
@@ -106,9 +109,9 @@ paths:
                   schema:
                     type: integer
                     description: Todo task id
-                    example: 1837112532602427242
+                    example: 1432598611792333766
                     format: int64
-                  example: 2705489933191255673
+                  example: 2445617283307198598
             responses:
                 "200":
                     description: OK response.
@@ -116,8 +119,8 @@ paths:
                         application/json:
                             schema:
                                 type: boolean
-                                example: true
-                            example: true
+                                example: false
+                            example: false
     /todolist:
         get:
             tags:
@@ -136,19 +139,31 @@ paths:
                                     $ref: '#/components/schemas/TodoTaskTitleList'
                                 description: Todo task list
                                 example:
-                                    - id: 9218520117342064169
-                                      title: Adipisci alias voluptatem et labore.
-                                    - id: 9218520117342064169
-                                      title: Adipisci alias voluptatem et labore.
-                                    - id: 9218520117342064169
-                                      title: Adipisci alias voluptatem et labore.
-                                    - id: 9218520117342064169
-                                      title: Adipisci alias voluptatem et labore.
+                                    - id: 7879620804179258190
+                                      label: Velit voluptas labore autem at dolor enim.
+                                      status: Dolores et asperiores.
+                                      title: Aperiam iste sed placeat consequatur doloribus.
+                                    - id: 7879620804179258190
+                                      label: Velit voluptas labore autem at dolor enim.
+                                      status: Dolores et asperiores.
+                                      title: Aperiam iste sed placeat consequatur doloribus.
+                                    - id: 7879620804179258190
+                                      label: Velit voluptas labore autem at dolor enim.
+                                      status: Dolores et asperiores.
+                                      title: Aperiam iste sed placeat consequatur doloribus.
+                                    - id: 7879620804179258190
+                                      label: Velit voluptas labore autem at dolor enim.
+                                      status: Dolores et asperiores.
+                                      title: Aperiam iste sed placeat consequatur doloribus.
                             example:
-                                - id: 9218520117342064169
-                                  title: Adipisci alias voluptatem et labore.
-                                - id: 9218520117342064169
-                                  title: Adipisci alias voluptatem et labore.
+                                - id: 7879620804179258190
+                                  label: Velit voluptas labore autem at dolor enim.
+                                  status: Dolores et asperiores.
+                                  title: Aperiam iste sed placeat consequatur doloribus.
+                                - id: 7879620804179258190
+                                  label: Velit voluptas labore autem at dolor enim.
+                                  status: Dolores et asperiores.
+                                  title: Aperiam iste sed placeat consequatur doloribus.
 components:
     schemas:
         AddTodoTaskRequestBody:
@@ -157,95 +172,122 @@ components:
                 asignee:
                     type: string
                     description: タスクを割り当てられた人の名前
-                    example: Beatae illo eum et aut accusamus corporis.
-                description:
+                    example: Minima impedit nam laudantium non id.
+                contents:
                     type: string
                     description: Todoタスクの説明
-                    example: Doloribus ea.
-                endDate:
+                    example: Quia nisi molestias.
+                end_date:
                     type: string
                     description: Todoタスクの終了予定日
-                    example: "1994-10-04"
+                    example: "1991-02-15"
                     format: date
-                startDate:
+                label:
+                    type: string
+                    description: Todoタスクのラベル
+                    example: Ipsam non cumque.
+                start_date:
                     type: string
                     description: Todoタスクの開始予定日
-                    example: "1996-05-14"
+                    example: "1994-08-31"
                     format: date
                 title:
                     type: string
                     description: Todoタスクのタイトル
-                    example: Eveniet cupiditate.
+                    example: In corrupti laborum sed odio eos.
             example:
-                asignee: Non cumque ea minima impedit.
-                description: Odio eos voluptates quia nisi molestias expedita.
-                endDate: "1978-12-15"
-                startDate: "2000-07-29"
-                title: Voluptatem odio in corrupti laborum.
+                asignee: Culpa adipisci.
+                contents: Voluptatibus animi et sed facilis.
+                end_date: "2005-12-18"
+                label: Asperiores harum excepturi consequatur.
+                start_date: "1987-03-08"
+                title: Explicabo mollitia officiis aperiam.
             required:
                 - title
-                - startDate
-                - endDate
+                - start_date
+                - end_date
         TodoTaskInfo:
             type: object
             properties:
                 asignee:
                     type: string
                     description: タスクを割り当てられた人の名前
-                    example: Asperiores harum excepturi consequatur.
-                description:
+                    example: Ut explicabo sed nobis provident.
+                contents:
                     type: string
                     description: Todoタスクの説明
-                    example: Voluptatibus animi et sed facilis.
-                endDate:
+                    example: Sit odit minima tenetur.
+                end_date:
                     type: string
                     description: Todoタスクの終了予定日
-                    example: "1982-04-07"
+                    example: "1971-12-31"
                     format: date
                 id:
                     type: integer
                     description: TodoタスクのユニークID
-                    example: 6380916948285107135
+                    example: 9192079933244509432
                     format: int64
-                startDate:
+                label:
+                    type: string
+                    description: Todoタスクのラベル
+                    example: Rerum ea et qui.
+                start_date:
                     type: string
                     description: Todoタスクの開始予定日
-                    example: "1979-03-22"
+                    example: "2014-02-25"
                     format: date
+                status:
+                    type: string
+                    description: Todoタスクの進捗状況
+                    example: Cum voluptatem nam sunt assumenda.
                 title:
                     type: string
                     description: Todoタスクのタイトル
-                    example: Explicabo mollitia officiis aperiam.
+                    example: Voluptatem debitis dolorum vitae est dolores.
             description: Todo task
             example:
-                asignee: Cum voluptatem nam sunt assumenda.
-                description: Est dolores sapiente sit odit minima tenetur.
-                endDate: "1991-09-25"
-                id: 7657912901273211408
-                startDate: "1981-07-11"
-                title: Voluptates voluptas labore velit voluptatem debitis dolorum.
+                asignee: Aliquid labore.
+                contents: Quidem veritatis porro impedit tenetur aut deleniti.
+                end_date: "2013-02-26"
+                id: 407848682973057687
+                label: Recusandae est est.
+                start_date: "1991-12-04"
+                status: Eos repellat dolorem quibusdam repudiandae praesentium.
+                title: Ullam exercitationem provident eveniet doloribus voluptate.
             required:
                 - id
                 - title
+                - status
         TodoTaskTitleList:
             type: object
             properties:
                 id:
                     type: integer
                     description: TodoタスクのユニークID
-                    example: 8699348963928953757
+                    example: 1560018128273690062
                     format: int64
+                label:
+                    type: string
+                    description: Todoタスクのラベル
+                    example: Voluptatum voluptas rerum qui non.
+                status:
+                    type: string
+                    description: Todoタスクの進捗状況
+                    example: Placeat amet ipsum qui perferendis quia omnis.
                 title:
                     type: string
                     description: Todoタスクのタイトル
-                    example: Illo molestiae illum ad.
+                    example: Ut ea ad quia dolores.
             description: Todoタスクの情報
             example:
-                id: 1286344123635654012
-                title: Fugiat voluptate qui voluptatum.
+                id: 2740634361015499265
+                label: Qui soluta qui velit.
+                status: Mollitia est veniam autem.
+                title: Laboriosam reiciendis optio.
             required:
                 - id
                 - title
+                - status
 tags:
     - name: service
       description: Todoタスク管理サービス
