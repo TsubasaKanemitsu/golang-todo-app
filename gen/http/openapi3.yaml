@@ -1,0 +1,251 @@
+openapi: 3.0.3
+info:
+    title: Todoタスク管理サービス
+    description: HTTP service for todo management
+    version: "1.0"
+servers:
+    - url: http://localhost:8088
+paths:
+    /add:
+        post:
+            tags:
+                - service
+            summary: addTodoTask service
+            description: Todoタスクを追加する。
+            operationId: service#addTodoTask
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AddTodoTaskRequestBody'
+                        example:
+                            asignee: Totam earum illo fugit placeat possimus quo.
+                            description: Earum illum.
+                            endDate: "1974-07-16"
+                            startDate: "1984-02-05"
+                            title: Est accusantium iusto odit consectetur qui.
+            responses:
+                "200":
+                    description: OK response.
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
+                                example: false
+                            example: true
+    /todo/{id}:
+        delete:
+            tags:
+                - service
+            summary: DELETETodoTask service
+            description: 指定したTodoタスクを削除する。
+            operationId: service#DELETETodoTask
+            parameters:
+                - name: id
+                  in: path
+                  description: Todo task id
+                  required: true
+                  schema:
+                    type: integer
+                    description: Todo task id
+                    example: 7936699549283312990
+                    format: int64
+                  example: 2517139906503681894
+            responses:
+                "200":
+                    description: OK response.
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
+                                example: false
+                            example: true
+        get:
+            tags:
+                - service
+            summary: GetTodoTask service
+            description: 指定したTodoタスクの詳細を取得する。
+            operationId: service#GetTodoTask
+            parameters:
+                - name: id
+                  in: path
+                  description: Todo task id
+                  required: true
+                  schema:
+                    type: integer
+                    description: Todo task id
+                    example: 5707356597525600621
+                    format: int64
+                  example: 8060140130348412978
+            responses:
+                "200":
+                    description: OK response.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TodoTaskInfo'
+                            example:
+                                asignee: Corrupti alias culpa nobis est.
+                                description: Quis aliquam.
+                                endDate: "1973-04-01"
+                                id: 4576473736897959510
+                                startDate: "2005-04-05"
+                                title: Autem occaecati nulla qui ipsa molestiae.
+        put:
+            tags:
+                - service
+            summary: UpdateTodoTask service
+            description: 指定したTodoタスクを更新する。
+            operationId: service#UpdateTodoTask
+            parameters:
+                - name: id
+                  in: path
+                  description: Todo task id
+                  required: true
+                  schema:
+                    type: integer
+                    description: Todo task id
+                    example: 1837112532602427242
+                    format: int64
+                  example: 2705489933191255673
+            responses:
+                "200":
+                    description: OK response.
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
+                                example: true
+                            example: true
+    /todolist:
+        get:
+            tags:
+                - service
+            summary: GetTodoTaskList service
+            description: Todoタスク一覧を取得する。
+            operationId: service#GetTodoTaskList
+            responses:
+                "200":
+                    description: OK response.
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/TodoTaskTitleList'
+                                description: Todo task list
+                                example:
+                                    - id: 9218520117342064169
+                                      title: Adipisci alias voluptatem et labore.
+                                    - id: 9218520117342064169
+                                      title: Adipisci alias voluptatem et labore.
+                                    - id: 9218520117342064169
+                                      title: Adipisci alias voluptatem et labore.
+                                    - id: 9218520117342064169
+                                      title: Adipisci alias voluptatem et labore.
+                            example:
+                                - id: 9218520117342064169
+                                  title: Adipisci alias voluptatem et labore.
+                                - id: 9218520117342064169
+                                  title: Adipisci alias voluptatem et labore.
+components:
+    schemas:
+        AddTodoTaskRequestBody:
+            type: object
+            properties:
+                asignee:
+                    type: string
+                    description: タスクを割り当てられた人の名前
+                    example: Beatae illo eum et aut accusamus corporis.
+                description:
+                    type: string
+                    description: Todoタスクの説明
+                    example: Doloribus ea.
+                endDate:
+                    type: string
+                    description: Todoタスクの終了予定日
+                    example: "1994-10-04"
+                    format: date
+                startDate:
+                    type: string
+                    description: Todoタスクの開始予定日
+                    example: "1996-05-14"
+                    format: date
+                title:
+                    type: string
+                    description: Todoタスクのタイトル
+                    example: Eveniet cupiditate.
+            example:
+                asignee: Non cumque ea minima impedit.
+                description: Odio eos voluptates quia nisi molestias expedita.
+                endDate: "1978-12-15"
+                startDate: "2000-07-29"
+                title: Voluptatem odio in corrupti laborum.
+            required:
+                - title
+                - startDate
+                - endDate
+        TodoTaskInfo:
+            type: object
+            properties:
+                asignee:
+                    type: string
+                    description: タスクを割り当てられた人の名前
+                    example: Asperiores harum excepturi consequatur.
+                description:
+                    type: string
+                    description: Todoタスクの説明
+                    example: Voluptatibus animi et sed facilis.
+                endDate:
+                    type: string
+                    description: Todoタスクの終了予定日
+                    example: "1982-04-07"
+                    format: date
+                id:
+                    type: integer
+                    description: TodoタスクのユニークID
+                    example: 6380916948285107135
+                    format: int64
+                startDate:
+                    type: string
+                    description: Todoタスクの開始予定日
+                    example: "1979-03-22"
+                    format: date
+                title:
+                    type: string
+                    description: Todoタスクのタイトル
+                    example: Explicabo mollitia officiis aperiam.
+            description: Todo task
+            example:
+                asignee: Cum voluptatem nam sunt assumenda.
+                description: Est dolores sapiente sit odit minima tenetur.
+                endDate: "1991-09-25"
+                id: 7657912901273211408
+                startDate: "1981-07-11"
+                title: Voluptates voluptas labore velit voluptatem debitis dolorum.
+            required:
+                - id
+                - title
+        TodoTaskTitleList:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    description: TodoタスクのユニークID
+                    example: 8699348963928953757
+                    format: int64
+                title:
+                    type: string
+                    description: Todoタスクのタイトル
+                    example: Illo molestiae illum ad.
+            description: Todoタスクの情報
+            example:
+                id: 1286344123635654012
+                title: Fugiat voluptate qui voluptatum.
+            required:
+                - id
+                - title
+tags:
+    - name: service
+      description: Todoタスク管理サービス
