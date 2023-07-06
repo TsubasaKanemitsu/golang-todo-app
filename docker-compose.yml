@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  psql:
+    image: postgres:11
+    environment:
+      PORT: 5432
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: testdb 
+      TZ: "Asia/Tokyo"
+    volumes: 
+      - ./docker/db:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
