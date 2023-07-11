@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	servicesvr "github.com/TsubasaKanemitsu/golang-todo-app/gen/http/service/server"
-	service "github.com/TsubasaKanemitsu/golang-todo-app/gen/service"
+	todoservicesvr "github.com/TsubasaKanemitsu/golang-todo-app/gen/http/todoservice/server"
+	todoservice "github.com/TsubasaKanemitsu/golang-todo-app/gen/todoservice"
 	goahttp "goa.design/goa/v3/http"
 	httpmdlwr "goa.design/goa/v3/http/middleware"
 	"goa.design/goa/v3/middleware"
@@ -18,7 +18,7 @@ import (
 
 // handleHTTPServer starts configures and starts a HTTP server on the given
 // URL. It shuts down the server if any error is received in the error channel.
-func handleHTTPServer(ctx context.Context, u *url.URL, serviceEndpoints *service.Endpoints, wg *sync.WaitGroup, errc chan error, logger *log.Logger, debug bool) {
+func handleHTTPServer(ctx context.Context, u *url.URL, todoserviceEndpoints *todoservice.Endpoints, wg *sync.WaitGroup, errc chan error, logger *log.Logger, debug bool) {
 
 	// Setup goa log adapter.
 	var (
@@ -49,20 +49,20 @@ func handleHTTPServer(ctx context.Context, u *url.URL, serviceEndpoints *service
 	// the service input and output data structures to HTTP requests and
 	// responses.
 	var (
-		serviceServer *servicesvr.Server
+		todoserviceServer *todoservicesvr.Server
 	)
 	{
 		eh := errorHandler(logger)
-		serviceServer = servicesvr.New(serviceEndpoints, mux, dec, enc, eh, nil)
+		todoserviceServer = todoservicesvr.New(todoserviceEndpoints, mux, dec, enc, eh, nil)
 		if debug {
 			servers := goahttp.Servers{
-				serviceServer,
+				todoserviceServer,
 			}
 			servers.Use(httpmdlwr.Debug(mux, os.Stdout))
 		}
 	}
 	// Configure the mux.
-	servicesvr.Mount(mux, serviceServer)
+	todoservicesvr.Mount(mux, todoserviceServer)
 
 	// Wrap the multiplexer with additional middlewares. Middlewares mounted
 	// here apply to all the service endpoints.
@@ -75,7 +75,7 @@ func handleHTTPServer(ctx context.Context, u *url.URL, serviceEndpoints *service
 	// Start HTTP server using default configuration, change the code to
 	// configure the server as required by your service.
 	srv := &http.Server{Addr: u.Host, Handler: handler, ReadHeaderTimeout: time.Second * 60}
-	for _, m := range serviceServer.Mounts {
+	for _, m := range todoserviceServer.Mounts {
 		logger.Printf("HTTP %q mounted on %s %s", m.Method, m.Verb, m.Pattern)
 	}
 

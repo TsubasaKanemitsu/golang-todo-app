@@ -15,7 +15,7 @@ var _ = dsl.API("todo", func() {
 })
 
 // Service describes a service
-var _ = dsl.Service("service", func() {
+var _ = dsl.Service("todoservice", func() {
 	dsl.Description("Todoタスク管理サービス")
 	cors.Origin("/.*localhost.*/", func() {
 		cors.Headers("X-Shared-Secret", "X-Authorization", "content-type")
@@ -82,7 +82,7 @@ var _ = dsl.Service("service", func() {
 		dsl.Result(dsl.Boolean)
 	})
 	// DELETE
-	dsl.Method("DELETETodoTask", func() {
+	dsl.Method("DeleteTodoTask", func() {
 		dsl.Description("指定したTodoタスクを削除する。")
 		dsl.Payload(func() {
 			dsl.Attribute("id", dsl.Int, "Todo task id")

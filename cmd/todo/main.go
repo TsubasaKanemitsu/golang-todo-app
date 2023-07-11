@@ -13,10 +13,12 @@ import (
 	"syscall"
 
 	todo "github.com/TsubasaKanemitsu/golang-todo-app"
-	service "github.com/TsubasaKanemitsu/golang-todo-app/gen/service"
+	todoservice "github.com/TsubasaKanemitsu/golang-todo-app/gen/todoservice"
+	"github.com/TsubasaKanemitsu/golang-todo-app/pkg/config"
 )
 
 func main() {
+	c := config.Prepare()
 	// Define command line flags, add any other flag required to configure the
 	// service.
 	var (
@@ -38,19 +40,19 @@ func main() {
 
 	// Initialize the services.
 	var (
-		serviceSvc service.Service
+		todoserviceSvc todoservice.Service
 	)
 	{
-		serviceSvc = todo.NewService(logger)
+		todoserviceSvc = todo.NewTodoservice(logger, c.Postgres)
 	}
 
 	// Wrap the services in endpoints that can be invoked from other services
 	// potentially running in different processes.
 	var (
-		serviceEndpoints *service.Endpoints
+		todoserviceEndpoints *todoservice.Endpoints
 	)
 	{
-		serviceEndpoints = service.NewEndpoints(serviceSvc)
+		todoserviceEndpoints = todoservice.NewEndpoints(todoserviceSvc)
 	}
 
 	// Create channel used by both the signal handler and server goroutines
@@ -92,7 +94,7 @@ func main() {
 			} else if u.Port() == "" {
 				u.Host = net.JoinHostPort(u.Host, "80")
 			}
-			handleHTTPServer(ctx, u, serviceEndpoints, &wg, errc, logger, *dbgF)
+			handleHTTPServer(ctx, u, todoserviceEndpoints, &wg, errc, logger, *dbgF)
 		}
 
 	default:

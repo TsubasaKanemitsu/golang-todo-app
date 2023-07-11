@@ -16,16 +16,16 @@ paths:
     /add:
         post:
             tags:
-                - service
-            summary: addTodoTask service
+                - todoservice
+            summary: addTodoTask todoservice
             description: Todoタスクを追加する。
-            operationId: service#addTodoTask
+            operationId: todoservice#addTodoTask
             parameters:
                 - name: AddTodoTaskRequestBody
                   in: body
                   required: true
                   schema:
-                    $ref: '#/definitions/ServiceAddTodoTaskRequestBody'
+                    $ref: '#/definitions/TodoserviceAddTodoTaskRequestBody'
                     required:
                         - title
                         - start_date
@@ -40,10 +40,10 @@ paths:
     /todo/{id}:
         get:
             tags:
-                - service
-            summary: GetTodoTask service
+                - todoservice
+            summary: GetTodoTask todoservice
             description: 指定したTodoタスクの詳細を取得する。
-            operationId: service#GetTodoTask
+            operationId: todoservice#GetTodoTask
             parameters:
                 - name: id
                   in: path
@@ -54,7 +54,7 @@ paths:
                 "200":
                     description: OK response.
                     schema:
-                        $ref: '#/definitions/ServiceGetTodoTaskResponseBody'
+                        $ref: '#/definitions/TodoserviceGetTodoTaskResponseBody'
                         required:
                             - id
                             - title
@@ -63,10 +63,10 @@ paths:
                 - http
         put:
             tags:
-                - service
-            summary: UpdateTodoTask service
+                - todoservice
+            summary: UpdateTodoTask todoservice
             description: 指定したTodoタスクを更新する。
-            operationId: service#UpdateTodoTask
+            operationId: todoservice#UpdateTodoTask
             parameters:
                 - name: id
                   in: path
@@ -82,10 +82,10 @@ paths:
                 - http
         delete:
             tags:
-                - service
-            summary: DELETETodoTask service
+                - todoservice
+            summary: DeleteTodoTask todoservice
             description: 指定したTodoタスクを削除する。
-            operationId: service#DELETETodoTask
+            operationId: todoservice#DeleteTodoTask
             parameters:
                 - name: id
                   in: path
@@ -102,10 +102,10 @@ paths:
     /todolist:
         get:
             tags:
-                - service
-            summary: GetTodoTaskList service
+                - todoservice
+            summary: GetTodoTaskList todoservice
             description: Todoタスク一覧を取得する。
-            operationId: service#GetTodoTaskList
+            operationId: todoservice#GetTodoTaskList
             responses:
                 "200":
                     description: OK response.
@@ -116,8 +116,8 @@ paths:
             schemes:
                 - http
 definitions:
-    ServiceAddTodoTaskRequestBody:
-        title: ServiceAddTodoTaskRequestBody
+    TodoserviceAddTodoTaskRequestBody:
+        title: TodoserviceAddTodoTaskRequestBody
         type: object
         properties:
             asignee:
@@ -157,8 +157,8 @@ definitions:
             - title
             - start_date
             - end_date
-    ServiceGetTodoTaskResponseBody:
-        title: ServiceGetTodoTaskResponseBody
+    TodoserviceGetTodoTaskResponseBody:
+        title: TodoserviceGetTodoTaskResponseBody
         type: object
         properties:
             asignee:

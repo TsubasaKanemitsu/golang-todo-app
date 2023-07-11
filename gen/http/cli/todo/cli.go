@@ -3,7 +3,7 @@
 // todo HTTP client CLI support package
 //
 // Command:
-// $ goa gen github.com/TsubasaKanemitsu/golang-todo-app/backend/design
+// $ goa gen github.com/TsubasaKanemitsu/golang-todo-app/design
 
 package cli
 
@@ -13,7 +13,7 @@ import (
 	"net/http"
 	"os"
 
-	servicec "github.com/TsubasaKanemitsu/golang-todo-app/gen/http/service/client"
+	todoservicec "github.com/TsubasaKanemitsu/golang-todo-app/gen/http/todoservice/client"
 	goahttp "goa.design/goa/v3/http"
 	goa "goa.design/goa/v3/pkg"
 )
@@ -22,13 +22,13 @@ import (
 //
 //	command (subcommand1|subcommand2|...)
 func UsageCommands() string {
-	return `service (add-todo-task|get-todo-task|get-todo-task-list|update-todo-task|delete-todo-task)
+	return `todoservice (add-todo-task|get-todo-task|get-todo-task-list|update-todo-task|delete-todo-task)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
-	return os.Args[0] + ` service add-todo-task --body '{
+	return os.Args[0] + ` todoservice add-todo-task --body '{
       "asignee": "Voluptatem qui assumenda ipsum.",
       "contents": "Laudantium fugiat iusto eaque placeat officia assumenda.",
       "end_date": "1970-11-01",
@@ -49,28 +49,28 @@ func ParseEndpoint(
 	restore bool,
 ) (goa.Endpoint, any, error) {
 	var (
-		serviceFlags = flag.NewFlagSet("service", flag.ContinueOnError)
+		todoserviceFlags = flag.NewFlagSet("todoservice", flag.ContinueOnError)
 
-		serviceAddTodoTaskFlags    = flag.NewFlagSet("add-todo-task", flag.ExitOnError)
-		serviceAddTodoTaskBodyFlag = serviceAddTodoTaskFlags.String("body", "REQUIRED", "")
+		todoserviceAddTodoTaskFlags    = flag.NewFlagSet("add-todo-task", flag.ExitOnError)
+		todoserviceAddTodoTaskBodyFlag = todoserviceAddTodoTaskFlags.String("body", "REQUIRED", "")
 
-		serviceGetTodoTaskFlags  = flag.NewFlagSet("get-todo-task", flag.ExitOnError)
-		serviceGetTodoTaskIDFlag = serviceGetTodoTaskFlags.String("id", "REQUIRED", "Todo task id")
+		todoserviceGetTodoTaskFlags  = flag.NewFlagSet("get-todo-task", flag.ExitOnError)
+		todoserviceGetTodoTaskIDFlag = todoserviceGetTodoTaskFlags.String("id", "REQUIRED", "Todo task id")
 
-		serviceGetTodoTaskListFlags = flag.NewFlagSet("get-todo-task-list", flag.ExitOnError)
+		todoserviceGetTodoTaskListFlags = flag.NewFlagSet("get-todo-task-list", flag.ExitOnError)
 
-		serviceUpdateTodoTaskFlags  = flag.NewFlagSet("update-todo-task", flag.ExitOnError)
-		serviceUpdateTodoTaskIDFlag = serviceUpdateTodoTaskFlags.String("id", "REQUIRED", "Todo task id")
+		todoserviceUpdateTodoTaskFlags  = flag.NewFlagSet("update-todo-task", flag.ExitOnError)
+		todoserviceUpdateTodoTaskIDFlag = todoserviceUpdateTodoTaskFlags.String("id", "REQUIRED", "Todo task id")
 
-		serviceDELETETodoTaskFlags  = flag.NewFlagSet("delete-todo-task", flag.ExitOnError)
-		serviceDELETETodoTaskIDFlag = serviceDELETETodoTaskFlags.String("id", "REQUIRED", "Todo task id")
+		todoserviceDeleteTodoTaskFlags  = flag.NewFlagSet("delete-todo-task", flag.ExitOnError)
+		todoserviceDeleteTodoTaskIDFlag = todoserviceDeleteTodoTaskFlags.String("id", "REQUIRED", "Todo task id")
 	)
-	serviceFlags.Usage = serviceUsage
-	serviceAddTodoTaskFlags.Usage = serviceAddTodoTaskUsage
-	serviceGetTodoTaskFlags.Usage = serviceGetTodoTaskUsage
-	serviceGetTodoTaskListFlags.Usage = serviceGetTodoTaskListUsage
-	serviceUpdateTodoTaskFlags.Usage = serviceUpdateTodoTaskUsage
-	serviceDELETETodoTaskFlags.Usage = serviceDELETETodoTaskUsage
+	todoserviceFlags.Usage = todoserviceUsage
+	todoserviceAddTodoTaskFlags.Usage = todoserviceAddTodoTaskUsage
+	todoserviceGetTodoTaskFlags.Usage = todoserviceGetTodoTaskUsage
+	todoserviceGetTodoTaskListFlags.Usage = todoserviceGetTodoTaskListUsage
+	todoserviceUpdateTodoTaskFlags.Usage = todoserviceUpdateTodoTaskUsage
+	todoserviceDeleteTodoTaskFlags.Usage = todoserviceDeleteTodoTaskUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -87,8 +87,8 @@ func ParseEndpoint(
 	{
 		svcn = flag.Arg(0)
 		switch svcn {
-		case "service":
-			svcf = serviceFlags
+		case "todoservice":
+			svcf = todoserviceFlags
 		default:
 			return nil, nil, fmt.Errorf("unknown service %q", svcn)
 		}
@@ -104,22 +104,22 @@ func ParseEndpoint(
 	{
 		epn = svcf.Arg(0)
 		switch svcn {
-		case "service":
+		case "todoservice":
 			switch epn {
 			case "add-todo-task":
-				epf = serviceAddTodoTaskFlags
+				epf = todoserviceAddTodoTaskFlags
 
 			case "get-todo-task":
-				epf = serviceGetTodoTaskFlags
+				epf = todoserviceGetTodoTaskFlags
 
 			case "get-todo-task-list":
-				epf = serviceGetTodoTaskListFlags
+				epf = todoserviceGetTodoTaskListFlags
 
 			case "update-todo-task":
-				epf = serviceUpdateTodoTaskFlags
+				epf = todoserviceUpdateTodoTaskFlags
 
 			case "delete-todo-task":
-				epf = serviceDELETETodoTaskFlags
+				epf = todoserviceDeleteTodoTaskFlags
 
 			}
 
@@ -143,24 +143,24 @@ func ParseEndpoint(
 	)
 	{
 		switch svcn {
-		case "service":
-			c := servicec.NewClient(scheme, host, doer, enc, dec, restore)
+		case "todoservice":
+			c := todoservicec.NewClient(scheme, host, doer, enc, dec, restore)
 			switch epn {
 			case "add-todo-task":
 				endpoint = c.AddTodoTask()
-				data, err = servicec.BuildAddTodoTaskPayload(*serviceAddTodoTaskBodyFlag)
+				data, err = todoservicec.BuildAddTodoTaskPayload(*todoserviceAddTodoTaskBodyFlag)
 			case "get-todo-task":
 				endpoint = c.GetTodoTask()
-				data, err = servicec.BuildGetTodoTaskPayload(*serviceGetTodoTaskIDFlag)
+				data, err = todoservicec.BuildGetTodoTaskPayload(*todoserviceGetTodoTaskIDFlag)
 			case "get-todo-task-list":
 				endpoint = c.GetTodoTaskList()
 				data = nil
 			case "update-todo-task":
 				endpoint = c.UpdateTodoTask()
-				data, err = servicec.BuildUpdateTodoTaskPayload(*serviceUpdateTodoTaskIDFlag)
+				data, err = todoservicec.BuildUpdateTodoTaskPayload(*todoserviceUpdateTodoTaskIDFlag)
 			case "delete-todo-task":
-				endpoint = c.DELETETodoTask()
-				data, err = servicec.BuildDELETETodoTaskPayload(*serviceDELETETodoTaskIDFlag)
+				endpoint = c.DeleteTodoTask()
+				data, err = todoservicec.BuildDeleteTodoTaskPayload(*todoserviceDeleteTodoTaskIDFlag)
 			}
 		}
 	}
@@ -171,11 +171,12 @@ func ParseEndpoint(
 	return endpoint, data, nil
 }
 
-// serviceUsage displays the usage of the service command and its subcommands.
-func serviceUsage() {
+// todoserviceUsage displays the usage of the todoservice command and its
+// subcommands.
+func todoserviceUsage() {
 	fmt.Fprintf(os.Stderr, `Todoタスク管理サービス
 Usage:
-    %[1]s [globalflags] service COMMAND [flags]
+    %[1]s [globalflags] todoservice COMMAND [flags]
 
 COMMAND:
     add-todo-task: Todoタスクを追加する。
@@ -185,17 +186,17 @@ COMMAND:
     delete-todo-task: 指定したTodoタスクを削除する。
 
 Additional help:
-    %[1]s service COMMAND --help
+    %[1]s todoservice COMMAND --help
 `, os.Args[0])
 }
-func serviceAddTodoTaskUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] service add-todo-task -body JSON
+func todoserviceAddTodoTaskUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] todoservice add-todo-task -body JSON
 
 Todoタスクを追加する。
     -body JSON: 
 
 Example:
-    %[1]s service add-todo-task --body '{
+    %[1]s todoservice add-todo-task --body '{
       "asignee": "Voluptatem qui assumenda ipsum.",
       "contents": "Laudantium fugiat iusto eaque placeat officia assumenda.",
       "end_date": "1970-11-01",
@@ -206,45 +207,45 @@ Example:
 `, os.Args[0])
 }
 
-func serviceGetTodoTaskUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] service get-todo-task -id INT
+func todoserviceGetTodoTaskUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] todoservice get-todo-task -id INT
 
 指定したTodoタスクの詳細を取得する。
     -id INT: Todo task id
 
 Example:
-    %[1]s service get-todo-task --id 7690700790349522607
+    %[1]s todoservice get-todo-task --id 7690700790349522607
 `, os.Args[0])
 }
 
-func serviceGetTodoTaskListUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] service get-todo-task-list
+func todoserviceGetTodoTaskListUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] todoservice get-todo-task-list
 
 Todoタスク一覧を取得する。
 
 Example:
-    %[1]s service get-todo-task-list
+    %[1]s todoservice get-todo-task-list
 `, os.Args[0])
 }
 
-func serviceUpdateTodoTaskUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] service update-todo-task -id INT
+func todoserviceUpdateTodoTaskUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] todoservice update-todo-task -id INT
 
 指定したTodoタスクを更新する。
     -id INT: Todo task id
 
 Example:
-    %[1]s service update-todo-task --id 6122907014954972101
+    %[1]s todoservice update-todo-task --id 6122907014954972101
 `, os.Args[0])
 }
 
-func serviceDELETETodoTaskUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] service delete-todo-task -id INT
+func todoserviceDeleteTodoTaskUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] todoservice delete-todo-task -id INT
 
 指定したTodoタスクを削除する。
     -id INT: Todo task id
 
 Example:
-    %[1]s service delete-todo-task --id 7521447378485825693
+    %[1]s todoservice delete-todo-task --id 7521447378485825693
 `, os.Args[0])
 }

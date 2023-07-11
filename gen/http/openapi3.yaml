@@ -9,10 +9,10 @@ paths:
     /add:
         post:
             tags:
-                - service
-            summary: addTodoTask service
+                - todoservice
+            summary: addTodoTask todoservice
             description: Todoタスクを追加する。
-            operationId: service#addTodoTask
+            operationId: todoservice#addTodoTask
             requestBody:
                 required: true
                 content:
@@ -38,10 +38,10 @@ paths:
     /todo/{id}:
         delete:
             tags:
-                - service
-            summary: DELETETodoTask service
+                - todoservice
+            summary: DeleteTodoTask todoservice
             description: 指定したTodoタスクを削除する。
-            operationId: service#DELETETodoTask
+            operationId: todoservice#DeleteTodoTask
             parameters:
                 - name: id
                   in: path
@@ -64,10 +64,10 @@ paths:
                             example: true
         get:
             tags:
-                - service
-            summary: GetTodoTask service
+                - todoservice
+            summary: GetTodoTask todoservice
             description: 指定したTodoタスクの詳細を取得する。
-            operationId: service#GetTodoTask
+            operationId: todoservice#GetTodoTask
             parameters:
                 - name: id
                   in: path
@@ -97,10 +97,10 @@ paths:
                                 title: A ipsam delectus qui ducimus enim.
         put:
             tags:
-                - service
-            summary: UpdateTodoTask service
+                - todoservice
+            summary: UpdateTodoTask todoservice
             description: 指定したTodoタスクを更新する。
-            operationId: service#UpdateTodoTask
+            operationId: todoservice#UpdateTodoTask
             parameters:
                 - name: id
                   in: path
@@ -124,10 +124,10 @@ paths:
     /todolist:
         get:
             tags:
-                - service
-            summary: GetTodoTaskList service
+                - todoservice
+            summary: GetTodoTaskList todoservice
             description: Todoタスク一覧を取得する。
-            operationId: service#GetTodoTaskList
+            operationId: todoservice#GetTodoTaskList
             responses:
                 "200":
                     description: OK response.
@@ -289,5 +289,5 @@ components:
                 - title
                 - status
 tags:
-    - name: service
+    - name: todoservice
       description: Todoタスク管理サービス

@@ -1,0 +1,18 @@
+env:
+  name: "dev" #"prod"
+prd:
+  postgres:
+    dbname: "testdb"
+    host: "127.0.0.1"
+    pass: "test"
+    port: "5432"
+    sslmode: "disable"
+    user: "todo"
+dev:
+  postgres:
+    dbname: "testdb"
+    host: "127.0.0.1"
+    pass: "test"
+    port: "5432"
+    sslmode: "disable"
+    user: "todo"

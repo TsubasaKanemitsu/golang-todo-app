@@ -2,7 +2,7 @@
 -- +goose StatementBegin
 CREATE TABLE
     m_todo_task (
-        id INTEGER,
+        id SERIAL,
         title VARCHAR(256) NOT NULL,
         contents TEXT,
         assignee VARCHAR(16),
