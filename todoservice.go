@@ -2,7 +2,6 @@ package todo
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	todoservice "github.com/TsubasaKanemitsu/golang-todo-app/gen/todoservice"
@@ -28,14 +27,11 @@ func NewTodoservice(logger *log.Logger, c config.Postgres) todoservice.Service {
 // Todoタスクを追加する。
 func (s *todoservicesrvc) AddTodoTask(ctx context.Context, p *todoservice.AddTodoTaskPayload) (res bool, err error) {
 	s.logger.Print("todoservice.addTodoTask")
-	s.logger.Print("p: ", p.StartDate)
 	m, err := input.ToMTodoTaskInfo(p)
 	if err != nil {
 		s.logger.Fatalf("error: input.ToMTodoTaskInfo()")
 	}
-	fmt.Println(m)
-	// s.usecase.AddTodoTask(ctx, m*model.TodoTaskInfo)
-	return
+	return s.usecase.AddTodoTask(ctx, m)
 }
 
 // 指定したTodoタスクの詳細を取得する。

@@ -25,6 +25,7 @@ func NewTodoRepository(db *sql.DB) repository.Todo {
 
 func (t *todo) Add(ctx context.Context, m *model.TodoTaskInfo) (bool, error) {
 	e := transfer.ToTodoTaskInfoEntity(m)
+	fmt.Printf("e: %#v", e)
 
 	err := e.Insert(ctx, t.DB, boil.Infer())
 	if err != nil {

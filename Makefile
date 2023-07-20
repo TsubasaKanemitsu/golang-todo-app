@@ -4,6 +4,7 @@ goa-gen-linux:
 
 goa-example:
 	goa example github.com/TsubasaKanemitsu/golang-todo-app/design
+build:
 	go build ./cmd/todo && go build ./cmd/todo-cli/
 setup-example-server:
 	./todo

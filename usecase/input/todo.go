@@ -2,6 +2,7 @@ package input
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/TsubasaKanemitsu/golang-todo-app/domain/model"
 	"github.com/TsubasaKanemitsu/golang-todo-app/gen/todoservice"
@@ -23,7 +24,15 @@ func ToMTodoTaskInfo(p *todoservice.AddTodoTaskPayload) (*model.TodoTaskInfo, er
 	}
 	// TODO:
 	// Add startDate and endDate
-	fmt.Println("m: ", m)
-	fmt.Println(p.StartDate)
+	startDate, err := time.Parse("2006-01-02", p.StartDate)
+	if err != nil {
+		return nil, fmt.Errorf("error: time.Parse(), startDate = %v", p.StartDate)
+	}
+	endDate, err := time.Parse("2006-01-02", p.EndDate)
+	if err != nil {
+		return nil, fmt.Errorf("error: time.Parse(), endDate = %v", p.StartDate)
+	}
+	m.StartDate = startDate
+	m.EndDate = endDate
 	return m, nil
 }
