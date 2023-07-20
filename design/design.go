@@ -32,6 +32,7 @@ var _ = dsl.Service("todoservice", func() {
 			dsl.Attribute("title", dsl.String, "Todoタスクのタイトル")
 			dsl.Attribute("contents", dsl.String, "Todoタスクの説明")
 			dsl.Attribute("label", dsl.String, "Todoタスクのラベル")
+			dsl.Attribute("status", dsl.String, "Todoタスクの進捗状況")
 			dsl.Attribute("asignee", dsl.String, "タスクを割り当てられた人の名前")
 			dsl.Attribute("start_date", dsl.String, "Todoタスクの開始予定日", func() {
 				dsl.Format(dsl.FormatDate)
@@ -39,7 +40,7 @@ var _ = dsl.Service("todoservice", func() {
 			dsl.Attribute("end_date", dsl.String, "Todoタスクの終了予定日", func() {
 				dsl.Format(dsl.FormatDate)
 			})
-			dsl.Required("title", "start_date", "end_date")
+			dsl.Required("title", "status", "start_date", "end_date")
 		})
 		dsl.HTTP(func() {
 			dsl.POST("/add")

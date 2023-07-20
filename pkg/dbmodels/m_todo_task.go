@@ -222,8 +222,8 @@ type mTodoTaskL struct{}
 
 var (
 	mTodoTaskAllColumns            = []string{"id", "title", "contents", "assignee", "label", "status", "start_date", "end_date", "created_at", "updated_at"}
-	mTodoTaskColumnsWithoutDefault = []string{"id", "title", "status", "end_date"}
-	mTodoTaskColumnsWithDefault    = []string{"contents", "assignee", "label", "start_date", "created_at", "updated_at"}
+	mTodoTaskColumnsWithoutDefault = []string{"title", "status", "end_date"}
+	mTodoTaskColumnsWithDefault    = []string{"id", "contents", "assignee", "label", "start_date", "created_at", "updated_at"}
 	mTodoTaskPrimaryKeyColumns     = []string{"id"}
 	mTodoTaskGeneratedColumns      = []string{}
 )

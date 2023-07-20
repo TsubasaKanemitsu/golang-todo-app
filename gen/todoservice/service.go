@@ -44,6 +44,8 @@ type AddTodoTaskPayload struct {
 	Contents *string
 	// Todoタスクのラベル
 	Label *string
+	// Todoタスクの進捗状況
+	Status string
 	// タスクを割り当てられた人の名前
 	Asignee *string
 	// Todoタスクの開始予定日

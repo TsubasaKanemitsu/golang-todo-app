@@ -28,6 +28,7 @@ paths:
                     $ref: '#/definitions/TodoserviceAddTodoTaskRequestBody'
                     required:
                         - title
+                        - status
                         - start_date
                         - end_date
             responses:
@@ -123,38 +124,44 @@ definitions:
             asignee:
                 type: string
                 description: タスクを割り当てられた人の名前
-                example: Autem amet distinctio cum quia ipsam quibusdam.
+                example: Voluptas amet fugit.
             contents:
                 type: string
                 description: Todoタスクの説明
-                example: Maxime quis sit debitis voluptate.
+                example: Autem amet distinctio cum quia ipsam quibusdam.
             end_date:
                 type: string
                 description: Todoタスクの終了予定日
-                example: "1976-11-12"
+                example: "1970-07-26"
                 format: date
             label:
                 type: string
                 description: Todoタスクのラベル
-                example: Eum exercitationem ut sunt et.
+                example: Id doloribus dignissimos sit voluptatibus et minima.
             start_date:
                 type: string
                 description: Todoタスクの開始予定日
-                example: "1970-02-01"
+                example: "1989-08-05"
                 format: date
+            status:
+                type: string
+                description: Todoタスクの進捗状況
+                example: Quod sed.
             title:
                 type: string
                 description: Todoタスクのタイトル
-                example: Est aut ut quas.
+                example: Eum exercitationem ut sunt et.
         example:
-            asignee: Explicabo dolorem.
-            contents: Aliquam aliquam ullam consequuntur.
-            end_date: "2000-08-24"
-            label: Veniam aut voluptate molestiae sed ea commodi.
-            start_date: "1989-09-11"
-            title: Delectus nihil sed.
+            asignee: Ea et id.
+            contents: Dolores eos doloremque distinctio voluptates.
+            end_date: "2011-07-04"
+            label: Et atque recusandae esse.
+            start_date: "2002-07-18"
+            status: Eum atque repellendus.
+            title: Ea commodi est explicabo dolorem corporis enim.
         required:
             - title
+            - status
             - start_date
             - end_date
     TodoserviceGetTodoTaskResponseBody:
@@ -164,48 +171,48 @@ definitions:
             asignee:
                 type: string
                 description: タスクを割り当てられた人の名前
-                example: Quod quo enim consequatur.
+                example: Voluptatem autem.
             contents:
                 type: string
                 description: Todoタスクの説明
-                example: Voluptas velit tempore et quasi.
+                example: Quasi est possimus perspiciatis dolores.
             end_date:
                 type: string
                 description: Todoタスクの終了予定日
-                example: "2015-07-28"
+                example: "2015-02-24"
                 format: date
             id:
                 type: integer
                 description: TodoタスクのユニークID
-                example: 4453071166547619461
+                example: 7746551150572581924
                 format: int64
             label:
                 type: string
                 description: Todoタスクのラベル
-                example: Qui nam eaque.
+                example: Quis quia vitae quia quos ab.
             start_date:
                 type: string
                 description: Todoタスクの開始予定日
-                example: "1991-08-29"
+                example: "1985-11-24"
                 format: date
             status:
                 type: string
                 description: Todoタスクの進捗状況
-                example: Hic quia dolorem.
+                example: Cumque odit.
             title:
                 type: string
                 description: Todoタスクのタイトル
-                example: Dolorum cum.
+                example: Quo enim consequatur.
         description: Todo task
         example:
-            asignee: Exercitationem autem velit.
-            contents: Eligendi qui dicta quasi aut.
-            end_date: "1972-09-07"
-            id: 2084585184225210962
-            label: Eum voluptas omnis quia incidunt.
-            start_date: "2004-04-03"
-            status: Illum ut sint.
-            title: Ea perspiciatis aliquam sunt et quia.
+            asignee: Suscipit error doloremque rerum numquam facere.
+            contents: Tempore est consequuntur distinctio.
+            end_date: "1983-11-11"
+            id: 5396699997767219861
+            label: Harum ipsam.
+            start_date: "1992-10-19"
+            status: Error ut dolorem eius.
+            title: Incidunt molestiae exercitationem autem velit rerum.
         required:
             - id
             - title
@@ -217,26 +224,26 @@ definitions:
             id:
                 type: integer
                 description: TodoタスクのユニークID
-                example: 3602385520543070132
+                example: 1915472974225392669
                 format: int64
             label:
                 type: string
                 description: Todoタスクのラベル
-                example: Pariatur sint.
+                example: Atque inventore dolores voluptatem.
             status:
                 type: string
                 description: Todoタスクの進捗状況
-                example: Aperiam inventore vel alias.
+                example: Cumque maxime quo quod.
             title:
                 type: string
                 description: Todoタスクのタイトル
-                example: Exercitationem eum quo ut iure ea vel.
+                example: Tenetur eaque itaque.
         description: Todoタスクの情報
         example:
-            id: 668508627860157868
-            label: Atque inventore dolores voluptatem.
-            status: Cumque maxime quo quod.
-            title: Quia tempore sunt reprehenderit tenetur eaque itaque.
+            id: 3356894696563613590
+            label: Ipsam non cumque.
+            status: Quia nisi molestias.
+            title: Corrupti laborum sed odio eos.
         required:
             - id
             - title

@@ -21,6 +21,8 @@ type AddTodoTaskRequestBody struct {
 	Contents *string `form:"contents,omitempty" json:"contents,omitempty" xml:"contents,omitempty"`
 	// Todoタスクのラベル
 	Label *string `form:"label,omitempty" json:"label,omitempty" xml:"label,omitempty"`
+	// Todoタスクの進捗状況
+	Status *string `form:"status,omitempty" json:"status,omitempty" xml:"status,omitempty"`
 	// タスクを割り当てられた人の名前
 	Asignee *string `form:"asignee,omitempty" json:"asignee,omitempty" xml:"asignee,omitempty"`
 	// Todoタスクの開始予定日
@@ -99,6 +101,7 @@ func NewAddTodoTaskPayload(body *AddTodoTaskRequestBody) *todoservice.AddTodoTas
 		Title:     *body.Title,
 		Contents:  body.Contents,
 		Label:     body.Label,
+		Status:    *body.Status,
 		Asignee:   body.Asignee,
 		StartDate: *body.StartDate,
 		EndDate:   *body.EndDate,
@@ -139,6 +142,9 @@ func NewDeleteTodoTaskPayload(id int) *todoservice.DeleteTodoTaskPayload {
 func ValidateAddTodoTaskRequestBody(body *AddTodoTaskRequestBody) (err error) {
 	if body.Title == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("title", "body"))
+	}
+	if body.Status == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("status", "body"))
 	}
 	if body.StartDate == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("start_date", "body"))

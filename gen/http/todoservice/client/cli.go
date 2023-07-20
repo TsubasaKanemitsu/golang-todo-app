@@ -24,7 +24,7 @@ func BuildAddTodoTaskPayload(todoserviceAddTodoTaskBody string) (*todoservice.Ad
 	{
 		err = json.Unmarshal([]byte(todoserviceAddTodoTaskBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"asignee\": \"Voluptatem qui assumenda ipsum.\",\n      \"contents\": \"Laudantium fugiat iusto eaque placeat officia assumenda.\",\n      \"end_date\": \"1970-11-01\",\n      \"label\": \"Ut quia error rerum.\",\n      \"start_date\": \"2004-04-03\",\n      \"title\": \"Quo temporibus dolores voluptas doloremque et aut.\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"asignee\": \"Repellat culpa ipsum optio at doloribus ea.\",\n      \"contents\": \"Qui assumenda ipsum consequatur nisi dolorem.\",\n      \"end_date\": \"1990-01-16\",\n      \"label\": \"Assumenda aliquid perspiciatis voluptatem.\",\n      \"start_date\": \"1977-11-04\",\n      \"status\": \"Illo amet architecto aut culpa quisquam assumenda.\",\n      \"title\": \"Quia error rerum sed.\"\n   }'")
 		}
 		err = goa.MergeErrors(err, goa.ValidateFormat("body.start_date", body.StartDate, goa.FormatDate))
 		err = goa.MergeErrors(err, goa.ValidateFormat("body.end_date", body.EndDate, goa.FormatDate))
@@ -36,6 +36,7 @@ func BuildAddTodoTaskPayload(todoserviceAddTodoTaskBody string) (*todoservice.Ad
 		Title:     body.Title,
 		Contents:  body.Contents,
 		Label:     body.Label,
+		Status:    body.Status,
 		Asignee:   body.Asignee,
 		StartDate: body.StartDate,
 		EndDate:   body.EndDate,

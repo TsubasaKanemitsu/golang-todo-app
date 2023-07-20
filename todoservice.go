@@ -2,13 +2,14 @@ package todo
 
 import (
 	"context"
+	"fmt"
 	"log"
 
-	"github.com/TsubasaKanemitsu/golang-todo-app/domain/model"
 	todoservice "github.com/TsubasaKanemitsu/golang-todo-app/gen/todoservice"
 	"github.com/TsubasaKanemitsu/golang-todo-app/injector"
 	"github.com/TsubasaKanemitsu/golang-todo-app/pkg/config"
 	"github.com/TsubasaKanemitsu/golang-todo-app/usecase"
+	"github.com/TsubasaKanemitsu/golang-todo-app/usecase/input"
 )
 
 // todoservice service example implementation.
@@ -27,7 +28,13 @@ func NewTodoservice(logger *log.Logger, c config.Postgres) todoservice.Service {
 // Todoタスクを追加する。
 func (s *todoservicesrvc) AddTodoTask(ctx context.Context, p *todoservice.AddTodoTaskPayload) (res bool, err error) {
 	s.logger.Print("todoservice.addTodoTask")
-	s.usecase.AddTodoTask(ctx, m*model.TodoTaskInfo)
+	s.logger.Print("p: ", p.StartDate)
+	m, err := input.ToMTodoTaskInfo(p)
+	if err != nil {
+		s.logger.Fatalf("error: input.ToMTodoTaskInfo()")
+	}
+	fmt.Println(m)
+	// s.usecase.AddTodoTask(ctx, m*model.TodoTaskInfo)
 	return
 }
 

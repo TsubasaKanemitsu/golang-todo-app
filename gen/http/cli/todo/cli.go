@@ -29,12 +29,13 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` todoservice add-todo-task --body '{
-      "asignee": "Voluptatem qui assumenda ipsum.",
-      "contents": "Laudantium fugiat iusto eaque placeat officia assumenda.",
-      "end_date": "1970-11-01",
-      "label": "Ut quia error rerum.",
-      "start_date": "2004-04-03",
-      "title": "Quo temporibus dolores voluptas doloremque et aut."
+      "asignee": "Repellat culpa ipsum optio at doloribus ea.",
+      "contents": "Qui assumenda ipsum consequatur nisi dolorem.",
+      "end_date": "1990-01-16",
+      "label": "Assumenda aliquid perspiciatis voluptatem.",
+      "start_date": "1977-11-04",
+      "status": "Illo amet architecto aut culpa quisquam assumenda.",
+      "title": "Quia error rerum sed."
    }'` + "\n" +
 		""
 }
@@ -197,12 +198,13 @@ Todoタスクを追加する。
 
 Example:
     %[1]s todoservice add-todo-task --body '{
-      "asignee": "Voluptatem qui assumenda ipsum.",
-      "contents": "Laudantium fugiat iusto eaque placeat officia assumenda.",
-      "end_date": "1970-11-01",
-      "label": "Ut quia error rerum.",
-      "start_date": "2004-04-03",
-      "title": "Quo temporibus dolores voluptas doloremque et aut."
+      "asignee": "Repellat culpa ipsum optio at doloribus ea.",
+      "contents": "Qui assumenda ipsum consequatur nisi dolorem.",
+      "end_date": "1990-01-16",
+      "label": "Assumenda aliquid perspiciatis voluptatem.",
+      "start_date": "1977-11-04",
+      "status": "Illo amet architecto aut culpa quisquam assumenda.",
+      "title": "Quia error rerum sed."
    }'
 `, os.Args[0])
 }
@@ -214,7 +216,7 @@ func todoserviceGetTodoTaskUsage() {
     -id INT: Todo task id
 
 Example:
-    %[1]s todoservice get-todo-task --id 7690700790349522607
+    %[1]s todoservice get-todo-task --id 4910293285761851704
 `, os.Args[0])
 }
 
@@ -235,7 +237,7 @@ func todoserviceUpdateTodoTaskUsage() {
     -id INT: Todo task id
 
 Example:
-    %[1]s todoservice update-todo-task --id 6122907014954972101
+    %[1]s todoservice update-todo-task --id 7861243439503615448
 `, os.Args[0])
 }
 
@@ -246,6 +248,6 @@ func todoserviceDeleteTodoTaskUsage() {
     -id INT: Todo task id
 
 Example:
-    %[1]s todoservice delete-todo-task --id 7521447378485825693
+    %[1]s todoservice delete-todo-task --id 1471196353697384712
 `, os.Args[0])
 }

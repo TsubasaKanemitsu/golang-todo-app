@@ -21,6 +21,8 @@ type AddTodoTaskRequestBody struct {
 	Contents *string `form:"contents,omitempty" json:"contents,omitempty" xml:"contents,omitempty"`
 	// Todoタスクのラベル
 	Label *string `form:"label,omitempty" json:"label,omitempty" xml:"label,omitempty"`
+	// Todoタスクの進捗状況
+	Status string `form:"status" json:"status" xml:"status"`
 	// タスクを割り当てられた人の名前
 	Asignee *string `form:"asignee,omitempty" json:"asignee,omitempty" xml:"asignee,omitempty"`
 	// Todoタスクの開始予定日
@@ -73,6 +75,7 @@ func NewAddTodoTaskRequestBody(p *todoservice.AddTodoTaskPayload) *AddTodoTaskRe
 		Title:     p.Title,
 		Contents:  p.Contents,
 		Label:     p.Label,
+		Status:    p.Status,
 		Asignee:   p.Asignee,
 		StartDate: p.StartDate,
 		EndDate:   p.EndDate,
