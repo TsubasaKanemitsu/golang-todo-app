@@ -54,10 +54,10 @@ type GetTodoTaskResponseBody struct {
 
 // GetTodoTaskListResponseBody is the type of the "todoservice" service
 // "GetTodoTaskList" endpoint HTTP response body.
-type GetTodoTaskListResponseBody []*TodoTaskTitleListResponse
+type GetTodoTaskListResponseBody []*TodoTaskTitleResponse
 
-// TodoTaskTitleListResponse is used to define fields on response body types.
-type TodoTaskTitleListResponse struct {
+// TodoTaskTitleResponse is used to define fields on response body types.
+type TodoTaskTitleResponse struct {
 	// TodoタスクのユニークID
 	ID *int `form:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
 	// Todoタスクのタイトル
@@ -100,12 +100,12 @@ func NewGetTodoTaskTodoTaskInfoOK(body *GetTodoTaskResponseBody) *todoservice.To
 	return v
 }
 
-// NewGetTodoTaskListTodoTaskTitleListOK builds a "todoservice" service
+// NewGetTodoTaskListTodoTaskTitleOK builds a "todoservice" service
 // "GetTodoTaskList" endpoint result from a HTTP "OK" response.
-func NewGetTodoTaskListTodoTaskTitleListOK(body []*TodoTaskTitleListResponse) []*todoservice.TodoTaskTitleList {
-	v := make([]*todoservice.TodoTaskTitleList, len(body))
+func NewGetTodoTaskListTodoTaskTitleOK(body []*TodoTaskTitleResponse) []*todoservice.TodoTaskTitle {
+	v := make([]*todoservice.TodoTaskTitle, len(body))
 	for i, val := range body {
-		v[i] = unmarshalTodoTaskTitleListResponseToTodoserviceTodoTaskTitleList(val)
+		v[i] = unmarshalTodoTaskTitleResponseToTodoserviceTodoTaskTitle(val)
 	}
 
 	return v
@@ -132,9 +132,9 @@ func ValidateGetTodoTaskResponseBody(body *GetTodoTaskResponseBody) (err error) 
 	return
 }
 
-// ValidateTodoTaskTitleListResponse runs the validations defined on
-// todoTaskTitleListResponse
-func ValidateTodoTaskTitleListResponse(body *TodoTaskTitleListResponse) (err error) {
+// ValidateTodoTaskTitleResponse runs the validations defined on
+// todoTaskTitleResponse
+func ValidateTodoTaskTitleResponse(body *TodoTaskTitleResponse) (err error) {
 	if body.ID == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("id", "body"))
 	}

@@ -137,7 +137,7 @@ paths:
                             schema:
                                 type: array
                                 items:
-                                    $ref: '#/components/schemas/TodoTaskTitleList'
+                                    $ref: '#/components/schemas/TodoTaskTitle'
                                 description: Todo task list
                                 example:
                                     - id: 2937686847744383422
@@ -261,7 +261,7 @@ components:
                 - id
                 - title
                 - status
-        TodoTaskTitleList:
+        TodoTaskTitle:
             type: object
             properties:
                 id:

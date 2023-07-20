@@ -98,7 +98,7 @@ func DecodeGetTodoTaskRequest(mux goahttp.Muxer, decoder func(*http.Request) goa
 // the todoservice GetTodoTaskList endpoint.
 func EncodeGetTodoTaskListResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, any) error {
 	return func(ctx context.Context, w http.ResponseWriter, v any) error {
-		res, _ := v.([]*todoservice.TodoTaskTitleList)
+		res, _ := v.([]*todoservice.TodoTaskTitle)
 		enc := encoder(ctx, w)
 		body := NewGetTodoTaskListResponseBody(res)
 		w.WriteHeader(http.StatusOK)
@@ -184,11 +184,10 @@ func DecodeDeleteTodoTaskRequest(mux goahttp.Muxer, decoder func(*http.Request) 
 	}
 }
 
-// marshalTodoserviceTodoTaskTitleListToTodoTaskTitleListResponse builds a
-// value of type *TodoTaskTitleListResponse from a value of type
-// *todoservice.TodoTaskTitleList.
-func marshalTodoserviceTodoTaskTitleListToTodoTaskTitleListResponse(v *todoservice.TodoTaskTitleList) *TodoTaskTitleListResponse {
-	res := &TodoTaskTitleListResponse{
+// marshalTodoserviceTodoTaskTitleToTodoTaskTitleResponse builds a value of
+// type *TodoTaskTitleResponse from a value of type *todoservice.TodoTaskTitle.
+func marshalTodoserviceTodoTaskTitleToTodoTaskTitleResponse(v *todoservice.TodoTaskTitle) *TodoTaskTitleResponse {
+	res := &TodoTaskTitleResponse{
 		ID:     v.ID,
 		Title:  v.Title,
 		Status: v.Status,

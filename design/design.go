@@ -67,7 +67,7 @@ var _ = dsl.Service("todoservice", func() {
 			dsl.GET("/todolist")
 			dsl.Response(dsl.StatusOK)
 		})
-		dsl.Result(dsl.ArrayOf(todoTaskTitleList), "Todo task list")
+		dsl.Result(dsl.ArrayOf(todoTaskTitle), "Todo task list")
 	})
 	// UPDATE
 	dsl.Method("UpdateTodoTask", func() {
@@ -114,7 +114,7 @@ var todoTaskInfo = dsl.Type(("todoTaskInfo"), func() {
 	dsl.Required("id", "title", "status")
 })
 
-var todoTaskTitleList = dsl.Type(("todoTaskTitleList"), func() {
+var todoTaskTitle = dsl.Type(("todoTaskTitle"), func() {
 	dsl.Description("Todoタスクの情報")
 	dsl.Attribute("id", dsl.Int, "TodoタスクのユニークID")
 	dsl.Attribute("title", dsl.String, "Todoタスクのタイトル")

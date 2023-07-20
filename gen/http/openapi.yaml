@@ -113,7 +113,7 @@ paths:
                     schema:
                         type: array
                         items:
-                            $ref: '#/definitions/todoTaskTitleListResponse'
+                            $ref: '#/definitions/todoTaskTitleResponse'
             schemes:
                 - http
 definitions:
@@ -217,8 +217,8 @@ definitions:
             - id
             - title
             - status
-    todoTaskTitleListResponse:
-        title: todoTaskTitleListResponse
+    todoTaskTitleResponse:
+        title: todoTaskTitleResponse
         type: object
         properties:
             id:

@@ -54,10 +54,10 @@ type GetTodoTaskResponseBody struct {
 
 // GetTodoTaskListResponseBody is the type of the "todoservice" service
 // "GetTodoTaskList" endpoint HTTP response body.
-type GetTodoTaskListResponseBody []*TodoTaskTitleListResponse
+type GetTodoTaskListResponseBody []*TodoTaskTitleResponse
 
-// TodoTaskTitleListResponse is used to define fields on response body types.
-type TodoTaskTitleListResponse struct {
+// TodoTaskTitleResponse is used to define fields on response body types.
+type TodoTaskTitleResponse struct {
 	// TodoタスクのユニークID
 	ID int `form:"id" json:"id" xml:"id"`
 	// Todoタスクのタイトル
@@ -86,10 +86,10 @@ func NewGetTodoTaskResponseBody(res *todoservice.TodoTaskInfo) *GetTodoTaskRespo
 
 // NewGetTodoTaskListResponseBody builds the HTTP response body from the result
 // of the "GetTodoTaskList" endpoint of the "todoservice" service.
-func NewGetTodoTaskListResponseBody(res []*todoservice.TodoTaskTitleList) GetTodoTaskListResponseBody {
-	body := make([]*TodoTaskTitleListResponse, len(res))
+func NewGetTodoTaskListResponseBody(res []*todoservice.TodoTaskTitle) GetTodoTaskListResponseBody {
+	body := make([]*TodoTaskTitleResponse, len(res))
 	for i, val := range res {
-		body[i] = marshalTodoserviceTodoTaskTitleListToTodoTaskTitleListResponse(val)
+		body[i] = marshalTodoserviceTodoTaskTitleToTodoTaskTitleResponse(val)
 	}
 	return body
 }

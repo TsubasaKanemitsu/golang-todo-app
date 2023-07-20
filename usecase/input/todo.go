@@ -13,7 +13,6 @@ func ToMTodoTaskInfo(p *todoservice.AddTodoTaskPayload) (*model.TodoTaskInfo, er
 	contents := null.StringFromPtr(p.Contents)
 	assignee := null.StringFromPtr(p.Asignee)
 	label := null.StringFromPtr(p.Label)
-	// status := null.StringFromPtr(p.Status)
 
 	m := &model.TodoTaskInfo{
 		Title:    p.Title,
@@ -22,8 +21,8 @@ func ToMTodoTaskInfo(p *todoservice.AddTodoTaskPayload) (*model.TodoTaskInfo, er
 		Label:    label,
 		Status:   p.Status,
 	}
-	// TODO:
-	// Add startDate and endDate
+
+	// Add StartDate and EndDate
 	startDate, err := time.Parse("2006-01-02", p.StartDate)
 	if err != nil {
 		return nil, fmt.Errorf("error: time.Parse(), startDate = %v", p.StartDate)
@@ -34,5 +33,6 @@ func ToMTodoTaskInfo(p *todoservice.AddTodoTaskPayload) (*model.TodoTaskInfo, er
 	}
 	m.StartDate = startDate
 	m.EndDate = endDate
+
 	return m, nil
 }

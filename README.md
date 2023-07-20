@@ -1,18 +1,22 @@
-## 機能：CRUDの実現
-- CREATE
-    - タスク追加（単体）
-- READ
-    - タスク一覧取得
-    - 特定タスクの詳細(タスク単体の取得)
-- UPDATE
-    - タスクの更新
-- DELETE
-    - タスクの削除
+## sample
+- ADD
+```bash
+./todo-cli todoservice add-todo-task --body '{
+          "asignee": "Kanemitsu",                                  
+          "contents": "Qui assumenda ipsum consequatur nisi dolorem.",
+          "end_date": "1990-01-16",
+          "label": "vuls",
+          "start_date": "1977-11-04",
+          "status": "not started",
+          "title": "Quia error rerum sed."
+       }'
+```
+- GET
+```bash
+./todo-cli todoservice get-todo-task -id 1
+```
 
-## タスク情報
-- id
-- description
-- assignee
-- priotity
-- start_date
-- end_date
+- GET List
+```bash
+./todo-cli todoservice get-todo-task-list
+```

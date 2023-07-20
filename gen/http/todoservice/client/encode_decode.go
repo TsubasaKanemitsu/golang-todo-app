@@ -194,7 +194,7 @@ func DecodeGetTodoTaskListResponse(decoder func(*http.Response) goahttp.Decoder,
 			}
 			for _, e := range body {
 				if e != nil {
-					if err2 := ValidateTodoTaskTitleListResponse(e); err2 != nil {
+					if err2 := ValidateTodoTaskTitleResponse(e); err2 != nil {
 						err = goa.MergeErrors(err, err2)
 					}
 				}
@@ -202,7 +202,7 @@ func DecodeGetTodoTaskListResponse(decoder func(*http.Response) goahttp.Decoder,
 			if err != nil {
 				return nil, goahttp.ErrValidationError("todoservice", "GetTodoTaskList", err)
 			}
-			res := NewGetTodoTaskListTodoTaskTitleListOK(body)
+			res := NewGetTodoTaskListTodoTaskTitleOK(body)
 			return res, nil
 		default:
 			body, _ := io.ReadAll(resp.Body)
@@ -331,11 +331,10 @@ func DecodeDeleteTodoTaskResponse(decoder func(*http.Response) goahttp.Decoder, 
 	}
 }
 
-// unmarshalTodoTaskTitleListResponseToTodoserviceTodoTaskTitleList builds a
-// value of type *todoservice.TodoTaskTitleList from a value of type
-// *TodoTaskTitleListResponse.
-func unmarshalTodoTaskTitleListResponseToTodoserviceTodoTaskTitleList(v *TodoTaskTitleListResponse) *todoservice.TodoTaskTitleList {
-	res := &todoservice.TodoTaskTitleList{
+// unmarshalTodoTaskTitleResponseToTodoserviceTodoTaskTitle builds a value of
+// type *todoservice.TodoTaskTitle from a value of type *TodoTaskTitleResponse.
+func unmarshalTodoTaskTitleResponseToTodoserviceTodoTaskTitle(v *TodoTaskTitleResponse) *todoservice.TodoTaskTitle {
+	res := &todoservice.TodoTaskTitle{
 		ID:     *v.ID,
 		Title:  *v.Title,
 		Status: *v.Status,

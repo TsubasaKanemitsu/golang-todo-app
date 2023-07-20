@@ -18,7 +18,7 @@ type Service interface {
 	// 指定したTodoタスクの詳細を取得する。
 	GetTodoTask(context.Context, *GetTodoTaskPayload) (res *TodoTaskInfo, err error)
 	// Todoタスク一覧を取得する。
-	GetTodoTaskList(context.Context) (res []*TodoTaskTitleList, err error)
+	GetTodoTaskList(context.Context) (res []*TodoTaskTitle, err error)
 	// 指定したTodoタスクを更新する。
 	UpdateTodoTask(context.Context, *UpdateTodoTaskPayload) (res bool, err error)
 	// 指定したTodoタスクを削除する。
@@ -89,7 +89,7 @@ type TodoTaskInfo struct {
 }
 
 // Todoタスクの情報
-type TodoTaskTitleList struct {
+type TodoTaskTitle struct {
 	// TodoタスクのユニークID
 	ID int
 	// Todoタスクのタイトル

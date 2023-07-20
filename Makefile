@@ -19,5 +19,6 @@ psql:
 
 sqlboiler:
 	sqlboiler psql --config ./sqlboiler.toml --pkgname dbmodels --wipe --no-hooks --struct-tag-casing camel --output ./pkg/dbmodels
+
 gooseup:
 	goose -dir migration/ddl postgres "user=todo dbname=testdb password=test sslmode=disable" up

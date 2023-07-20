@@ -55,13 +55,13 @@ func (c *Client) GetTodoTask(ctx context.Context, p *GetTodoTaskPayload) (res *T
 
 // GetTodoTaskList calls the "GetTodoTaskList" endpoint of the "todoservice"
 // service.
-func (c *Client) GetTodoTaskList(ctx context.Context) (res []*TodoTaskTitleList, err error) {
+func (c *Client) GetTodoTaskList(ctx context.Context) (res []*TodoTaskTitle, err error) {
 	var ires any
 	ires, err = c.GetTodoTaskListEndpoint(ctx, nil)
 	if err != nil {
 		return
 	}
-	return ires.([]*TodoTaskTitleList), nil
+	return ires.([]*TodoTaskTitle), nil
 }
 
 // UpdateTodoTask calls the "UpdateTodoTask" endpoint of the "todoservice"
