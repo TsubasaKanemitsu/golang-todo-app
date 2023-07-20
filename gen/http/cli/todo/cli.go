@@ -29,13 +29,13 @@ func UsageCommands() string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` todoservice add-todo-task --body '{
-      "asignee": "Repellat culpa ipsum optio at doloribus ea.",
-      "contents": "Qui assumenda ipsum consequatur nisi dolorem.",
-      "end_date": "1990-01-16",
-      "label": "Assumenda aliquid perspiciatis voluptatem.",
-      "start_date": "1977-11-04",
-      "status": "Illo amet architecto aut culpa quisquam assumenda.",
-      "title": "Quia error rerum sed."
+      "asignee": "Veritatis nihil ab voluptatum quia et est.",
+      "contents": "Labore neque perspiciatis.",
+      "end_date": "1979-09-18",
+      "label": "Ut sapiente et.",
+      "start_date": "2003-09-14",
+      "status": "Tempore enim fugiat doloribus aut eos corrupti.",
+      "title": "Maxime voluptas ut laudantium atque voluptatum."
    }'` + "\n" +
 		""
 }
@@ -60,8 +60,9 @@ func ParseEndpoint(
 
 		todoserviceGetTodoTaskListFlags = flag.NewFlagSet("get-todo-task-list", flag.ExitOnError)
 
-		todoserviceUpdateTodoTaskFlags  = flag.NewFlagSet("update-todo-task", flag.ExitOnError)
-		todoserviceUpdateTodoTaskIDFlag = todoserviceUpdateTodoTaskFlags.String("id", "REQUIRED", "Todo task id")
+		todoserviceUpdateTodoTaskFlags    = flag.NewFlagSet("update-todo-task", flag.ExitOnError)
+		todoserviceUpdateTodoTaskBodyFlag = todoserviceUpdateTodoTaskFlags.String("body", "REQUIRED", "")
+		todoserviceUpdateTodoTaskIDFlag   = todoserviceUpdateTodoTaskFlags.String("id", "REQUIRED", "Todo task id")
 
 		todoserviceDeleteTodoTaskFlags  = flag.NewFlagSet("delete-todo-task", flag.ExitOnError)
 		todoserviceDeleteTodoTaskIDFlag = todoserviceDeleteTodoTaskFlags.String("id", "REQUIRED", "Todo task id")
@@ -158,7 +159,7 @@ func ParseEndpoint(
 				data = nil
 			case "update-todo-task":
 				endpoint = c.UpdateTodoTask()
-				data, err = todoservicec.BuildUpdateTodoTaskPayload(*todoserviceUpdateTodoTaskIDFlag)
+				data, err = todoservicec.BuildUpdateTodoTaskPayload(*todoserviceUpdateTodoTaskBodyFlag, *todoserviceUpdateTodoTaskIDFlag)
 			case "delete-todo-task":
 				endpoint = c.DeleteTodoTask()
 				data, err = todoservicec.BuildDeleteTodoTaskPayload(*todoserviceDeleteTodoTaskIDFlag)
@@ -198,13 +199,13 @@ Todoタスクを追加する。
 
 Example:
     %[1]s todoservice add-todo-task --body '{
-      "asignee": "Repellat culpa ipsum optio at doloribus ea.",
-      "contents": "Qui assumenda ipsum consequatur nisi dolorem.",
-      "end_date": "1990-01-16",
-      "label": "Assumenda aliquid perspiciatis voluptatem.",
-      "start_date": "1977-11-04",
-      "status": "Illo amet architecto aut culpa quisquam assumenda.",
-      "title": "Quia error rerum sed."
+      "asignee": "Veritatis nihil ab voluptatum quia et est.",
+      "contents": "Labore neque perspiciatis.",
+      "end_date": "1979-09-18",
+      "label": "Ut sapiente et.",
+      "start_date": "2003-09-14",
+      "status": "Tempore enim fugiat doloribus aut eos corrupti.",
+      "title": "Maxime voluptas ut laudantium atque voluptatum."
    }'
 `, os.Args[0])
 }
@@ -216,7 +217,7 @@ func todoserviceGetTodoTaskUsage() {
     -id INT: Todo task id
 
 Example:
-    %[1]s todoservice get-todo-task --id 4910293285761851704
+    %[1]s todoservice get-todo-task --id 8178725769944513011
 `, os.Args[0])
 }
 
@@ -231,13 +232,22 @@ Example:
 }
 
 func todoserviceUpdateTodoTaskUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] todoservice update-todo-task -id INT
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] todoservice update-todo-task -body JSON -id INT
 
 指定したTodoタスクを更新する。
+    -body JSON: 
     -id INT: Todo task id
 
 Example:
-    %[1]s todoservice update-todo-task --id 7861243439503615448
+    %[1]s todoservice update-todo-task --body '{
+      "asignee": "Reprehenderit aut labore et saepe.",
+      "contents": "Et atque recusandae esse.",
+      "end_date": "2002-05-25",
+      "label": "Ea et id.",
+      "start_date": "1985-02-15",
+      "status": "Eum atque repellendus.",
+      "title": "Doloremque distinctio voluptates."
+   }' --id 4941643938205027273
 `, os.Args[0])
 }
 
@@ -248,6 +258,6 @@ func todoserviceDeleteTodoTaskUsage() {
     -id INT: Todo task id
 
 Example:
-    %[1]s todoservice delete-todo-task --id 1471196353697384712
+    %[1]s todoservice delete-todo-task --id 2157462634579752688
 `, os.Args[0])
 }

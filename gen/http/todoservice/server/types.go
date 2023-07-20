@@ -31,6 +31,25 @@ type AddTodoTaskRequestBody struct {
 	EndDate *string `form:"end_date,omitempty" json:"end_date,omitempty" xml:"end_date,omitempty"`
 }
 
+// UpdateTodoTaskRequestBody is the type of the "todoservice" service
+// "UpdateTodoTask" endpoint HTTP request body.
+type UpdateTodoTaskRequestBody struct {
+	// Todoタスクのタイトル
+	Title *string `form:"title,omitempty" json:"title,omitempty" xml:"title,omitempty"`
+	// Todoタスクの説明
+	Contents *string `form:"contents,omitempty" json:"contents,omitempty" xml:"contents,omitempty"`
+	// Todoタスクの進捗状況
+	Status *string `form:"status,omitempty" json:"status,omitempty" xml:"status,omitempty"`
+	// Todoタスクのラベル
+	Label *string `form:"label,omitempty" json:"label,omitempty" xml:"label,omitempty"`
+	// タスクを割り当てられた人の名前
+	Asignee *string `form:"asignee,omitempty" json:"asignee,omitempty" xml:"asignee,omitempty"`
+	// Todoタスクの開始予定日
+	StartDate *string `form:"start_date,omitempty" json:"start_date,omitempty" xml:"start_date,omitempty"`
+	// Todoタスクの終了予定日
+	EndDate *string `form:"end_date,omitempty" json:"end_date,omitempty" xml:"end_date,omitempty"`
+}
+
 // GetTodoTaskResponseBody is the type of the "todoservice" service
 // "GetTodoTask" endpoint HTTP response body.
 type GetTodoTaskResponseBody struct {
@@ -121,9 +140,17 @@ func NewGetTodoTaskPayload(id int) *todoservice.GetTodoTaskPayload {
 
 // NewUpdateTodoTaskPayload builds a todoservice service UpdateTodoTask
 // endpoint payload.
-func NewUpdateTodoTaskPayload(id int) *todoservice.UpdateTodoTaskPayload {
-	v := &todoservice.UpdateTodoTaskPayload{}
-	v.ID = id
+func NewUpdateTodoTaskPayload(body *UpdateTodoTaskRequestBody, id int) *todoservice.UpdateTodoTaskPayload {
+	v := &todoservice.UpdateTodoTaskPayload{
+		Title:     *body.Title,
+		Contents:  body.Contents,
+		Status:    *body.Status,
+		Label:     body.Label,
+		Asignee:   body.Asignee,
+		StartDate: *body.StartDate,
+		EndDate:   *body.EndDate,
+	}
+	v.ID = &id
 
 	return v
 }
@@ -140,6 +167,30 @@ func NewDeleteTodoTaskPayload(id int) *todoservice.DeleteTodoTaskPayload {
 // ValidateAddTodoTaskRequestBody runs the validations defined on
 // AddTodoTaskRequestBody
 func ValidateAddTodoTaskRequestBody(body *AddTodoTaskRequestBody) (err error) {
+	if body.Title == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("title", "body"))
+	}
+	if body.Status == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("status", "body"))
+	}
+	if body.StartDate == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("start_date", "body"))
+	}
+	if body.EndDate == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("end_date", "body"))
+	}
+	if body.StartDate != nil {
+		err = goa.MergeErrors(err, goa.ValidateFormat("body.start_date", *body.StartDate, goa.FormatDate))
+	}
+	if body.EndDate != nil {
+		err = goa.MergeErrors(err, goa.ValidateFormat("body.end_date", *body.EndDate, goa.FormatDate))
+	}
+	return
+}
+
+// ValidateUpdateTodoTaskRequestBody runs the validations defined on
+// UpdateTodoTaskRequestBody
+func ValidateUpdateTodoTaskRequestBody(body *UpdateTodoTaskRequestBody) (err error) {
 	if body.Title == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("title", "body"))
 	}

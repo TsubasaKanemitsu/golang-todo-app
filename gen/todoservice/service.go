@@ -104,5 +104,19 @@ type TodoTaskTitle struct {
 // UpdateTodoTask method.
 type UpdateTodoTaskPayload struct {
 	// Todo task id
-	ID int
+	ID *int
+	// Todoタスクのタイトル
+	Title string
+	// Todoタスクの説明
+	Contents *string
+	// Todoタスクの進捗状況
+	Status string
+	// Todoタスクのラベル
+	Label *string
+	// タスクを割り当てられた人の名前
+	Asignee *string
+	// Todoタスクの開始予定日
+	StartDate string
+	// Todoタスクの終了予定日
+	EndDate string
 }

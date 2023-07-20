@@ -48,18 +48,20 @@ func (t *todo) GetTodoTaskList(ctx context.Context) ([]*model.TodoTaskTitle, err
 	if err != nil {
 		return nil, fmt.Errorf("failet to fetch todo task list")
 	}
-	models := make([]*model.TodoTaskTitle, len(entities))
+	if len(entities) == 0 {
+		return []*model.TodoTaskTitle{}, nil
+	}
+	var models []*model.TodoTaskTitle
 	for _, e := range entities {
 
-		m := &model.TodoTaskTitle{
+		m := model.TodoTaskTitle{
 			ID:     e.ID,
 			Title:  e.Title,
 			Label:  e.Label,
 			Status: e.Status,
 		}
-		models = append(models, m)
+		models = append(models, &m)
 	}
-
 	return models, nil
 }
 

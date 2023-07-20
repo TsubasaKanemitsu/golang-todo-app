@@ -140,10 +140,15 @@ func (c *Client) GetTodoTaskList() goa.Endpoint {
 // todoservice service UpdateTodoTask server.
 func (c *Client) UpdateTodoTask() goa.Endpoint {
 	var (
+		encodeRequest  = EncodeUpdateTodoTaskRequest(c.encoder)
 		decodeResponse = DecodeUpdateTodoTaskResponse(c.decoder, c.RestoreResponseBody)
 	)
 	return func(ctx context.Context, v any) (any, error) {
 		req, err := c.BuildUpdateTodoTaskRequest(ctx, v)
+		if err != nil {
+			return nil, err
+		}
+		err = encodeRequest(req, v)
 		if err != nil {
 			return nil, err
 		}

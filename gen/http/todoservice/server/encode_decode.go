@@ -123,8 +123,23 @@ func EncodeUpdateTodoTaskResponse(encoder func(context.Context, http.ResponseWri
 func DecodeUpdateTodoTaskRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (any, error) {
 	return func(r *http.Request) (any, error) {
 		var (
-			id  int
-			err error
+			body UpdateTodoTaskRequestBody
+			err  error
+		)
+		err = decoder(r).Decode(&body)
+		if err != nil {
+			if err == io.EOF {
+				return nil, goa.MissingPayloadError()
+			}
+			return nil, goa.DecodePayloadError(err.Error())
+		}
+		err = ValidateUpdateTodoTaskRequestBody(&body)
+		if err != nil {
+			return nil, err
+		}
+
+		var (
+			id int
 
 			params = mux.Vars(r)
 		)
@@ -139,7 +154,7 @@ func DecodeUpdateTodoTaskRequest(mux goahttp.Muxer, decoder func(*http.Request) 
 		if err != nil {
 			return nil, err
 		}
-		payload := NewUpdateTodoTaskPayload(id)
+		payload := NewUpdateTodoTaskPayload(&body, id)
 
 		return payload, nil
 	}

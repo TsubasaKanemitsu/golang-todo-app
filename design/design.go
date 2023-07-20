@@ -74,7 +74,18 @@ var _ = dsl.Service("todoservice", func() {
 		dsl.Description("指定したTodoタスクを更新する。")
 		dsl.Payload(func() {
 			dsl.Attribute("id", dsl.Int, "Todo task id")
-			dsl.Required("id")
+			dsl.Attribute("title", dsl.String, "Todoタスクのタイトル")
+			dsl.Attribute("contents", dsl.String, "Todoタスクの説明")
+			dsl.Attribute("status", dsl.String, "Todoタスクの進捗状況")
+			dsl.Attribute("label", dsl.String, "Todoタスクのラベル")
+			dsl.Attribute("asignee", dsl.String, "タスクを割り当てられた人の名前")
+			dsl.Attribute("start_date", dsl.String, "Todoタスクの開始予定日", func() {
+				dsl.Format(dsl.FormatDate)
+			})
+			dsl.Attribute("end_date", dsl.String, "Todoタスクの終了予定日", func() {
+				dsl.Format(dsl.FormatDate)
+			})
+			dsl.Required("title", "status", "start_date", "end_date")
 		})
 		dsl.HTTP(func() {
 			dsl.PUT("/todo/{id}")

@@ -222,7 +222,9 @@ func (c *Client) BuildUpdateTodoTaskRequest(ctx context.Context, v any) (*http.R
 		if !ok {
 			return nil, goahttp.ErrInvalidType("todoservice", "UpdateTodoTask", "*todoservice.UpdateTodoTaskPayload", v)
 		}
-		id = p.ID
+		if p.ID != nil {
+			id = *p.ID
+		}
 	}
 	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: UpdateTodoTaskTodoservicePath(id)}
 	req, err := http.NewRequest("PUT", u.String(), nil)
@@ -234,6 +236,22 @@ func (c *Client) BuildUpdateTodoTaskRequest(ctx context.Context, v any) (*http.R
 	}
 
 	return req, nil
+}
+
+// EncodeUpdateTodoTaskRequest returns an encoder for requests sent to the
+// todoservice UpdateTodoTask server.
+func EncodeUpdateTodoTaskRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, any) error {
+	return func(req *http.Request, v any) error {
+		p, ok := v.(*todoservice.UpdateTodoTaskPayload)
+		if !ok {
+			return goahttp.ErrInvalidType("todoservice", "UpdateTodoTask", "*todoservice.UpdateTodoTaskPayload", v)
+		}
+		body := NewUpdateTodoTaskRequestBody(p)
+		if err := encoder(req).Encode(&body); err != nil {
+			return goahttp.ErrEncodingError("todoservice", "UpdateTodoTask", err)
+		}
+		return nil
+	}
 }
 
 // DecodeUpdateTodoTaskResponse returns a decoder for responses returned by the

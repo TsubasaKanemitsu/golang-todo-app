@@ -68,7 +68,7 @@ func (s *todoservicesrvc) GetTodoTaskList(ctx context.Context) (res []*todoservi
 		s.logger.Fatalf("error: usecase.GetTodoTaskList()")
 		return []*todoservice.TodoTaskTitle{}, err
 	}
-	response := make([]*todoservice.TodoTaskTitle, len(mList))
+	var response []*todoservice.TodoTaskTitle
 	for _, m := range mList {
 		t := &todoservice.TodoTaskTitle{
 			ID:     m.ID,
@@ -78,7 +78,6 @@ func (s *todoservicesrvc) GetTodoTaskList(ctx context.Context) (res []*todoservi
 		}
 		response = append(response, t)
 	}
-
 	return response, nil
 }
 
@@ -91,5 +90,5 @@ func (s *todoservicesrvc) UpdateTodoTask(ctx context.Context, p *todoservice.Upd
 // 指定したTodoタスクを削除する。
 func (s *todoservicesrvc) DeleteTodoTask(ctx context.Context, p *todoservice.DeleteTodoTaskPayload) (res bool, err error) {
 	s.logger.Print("todoservice.DeleteTodoTask")
-	return
+	return s.usecase.DeleteTodoTask(ctx, p.ID)
 }

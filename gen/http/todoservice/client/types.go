@@ -31,6 +31,25 @@ type AddTodoTaskRequestBody struct {
 	EndDate string `form:"end_date" json:"end_date" xml:"end_date"`
 }
 
+// UpdateTodoTaskRequestBody is the type of the "todoservice" service
+// "UpdateTodoTask" endpoint HTTP request body.
+type UpdateTodoTaskRequestBody struct {
+	// Todoタスクのタイトル
+	Title string `form:"title" json:"title" xml:"title"`
+	// Todoタスクの説明
+	Contents *string `form:"contents,omitempty" json:"contents,omitempty" xml:"contents,omitempty"`
+	// Todoタスクの進捗状況
+	Status string `form:"status" json:"status" xml:"status"`
+	// Todoタスクのラベル
+	Label *string `form:"label,omitempty" json:"label,omitempty" xml:"label,omitempty"`
+	// タスクを割り当てられた人の名前
+	Asignee *string `form:"asignee,omitempty" json:"asignee,omitempty" xml:"asignee,omitempty"`
+	// Todoタスクの開始予定日
+	StartDate string `form:"start_date" json:"start_date" xml:"start_date"`
+	// Todoタスクの終了予定日
+	EndDate string `form:"end_date" json:"end_date" xml:"end_date"`
+}
+
 // GetTodoTaskResponseBody is the type of the "todoservice" service
 // "GetTodoTask" endpoint HTTP response body.
 type GetTodoTaskResponseBody struct {
@@ -76,6 +95,21 @@ func NewAddTodoTaskRequestBody(p *todoservice.AddTodoTaskPayload) *AddTodoTaskRe
 		Contents:  p.Contents,
 		Label:     p.Label,
 		Status:    p.Status,
+		Asignee:   p.Asignee,
+		StartDate: p.StartDate,
+		EndDate:   p.EndDate,
+	}
+	return body
+}
+
+// NewUpdateTodoTaskRequestBody builds the HTTP request body from the payload
+// of the "UpdateTodoTask" endpoint of the "todoservice" service.
+func NewUpdateTodoTaskRequestBody(p *todoservice.UpdateTodoTaskPayload) *UpdateTodoTaskRequestBody {
+	body := &UpdateTodoTaskRequestBody{
+		Title:     p.Title,
+		Contents:  p.Contents,
+		Status:    p.Status,
+		Label:     p.Label,
 		Asignee:   p.Asignee,
 		StartDate: p.StartDate,
 		EndDate:   p.EndDate,

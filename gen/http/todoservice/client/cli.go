@@ -24,7 +24,7 @@ func BuildAddTodoTaskPayload(todoserviceAddTodoTaskBody string) (*todoservice.Ad
 	{
 		err = json.Unmarshal([]byte(todoserviceAddTodoTaskBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"asignee\": \"Repellat culpa ipsum optio at doloribus ea.\",\n      \"contents\": \"Qui assumenda ipsum consequatur nisi dolorem.\",\n      \"end_date\": \"1990-01-16\",\n      \"label\": \"Assumenda aliquid perspiciatis voluptatem.\",\n      \"start_date\": \"1977-11-04\",\n      \"status\": \"Illo amet architecto aut culpa quisquam assumenda.\",\n      \"title\": \"Quia error rerum sed.\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"asignee\": \"Veritatis nihil ab voluptatum quia et est.\",\n      \"contents\": \"Labore neque perspiciatis.\",\n      \"end_date\": \"1979-09-18\",\n      \"label\": \"Ut sapiente et.\",\n      \"start_date\": \"2003-09-14\",\n      \"status\": \"Tempore enim fugiat doloribus aut eos corrupti.\",\n      \"title\": \"Maxime voluptas ut laudantium atque voluptatum.\"\n   }'")
 		}
 		err = goa.MergeErrors(err, goa.ValidateFormat("body.start_date", body.StartDate, goa.FormatDate))
 		err = goa.MergeErrors(err, goa.ValidateFormat("body.end_date", body.EndDate, goa.FormatDate))
@@ -66,8 +66,20 @@ func BuildGetTodoTaskPayload(todoserviceGetTodoTaskID string) (*todoservice.GetT
 
 // BuildUpdateTodoTaskPayload builds the payload for the todoservice
 // UpdateTodoTask endpoint from CLI flags.
-func BuildUpdateTodoTaskPayload(todoserviceUpdateTodoTaskID string) (*todoservice.UpdateTodoTaskPayload, error) {
+func BuildUpdateTodoTaskPayload(todoserviceUpdateTodoTaskBody string, todoserviceUpdateTodoTaskID string) (*todoservice.UpdateTodoTaskPayload, error) {
 	var err error
+	var body UpdateTodoTaskRequestBody
+	{
+		err = json.Unmarshal([]byte(todoserviceUpdateTodoTaskBody), &body)
+		if err != nil {
+			return nil, fmt.Errorf("invalid JSON for body, \nerror: %s, \nexample of valid JSON:\n%s", err, "'{\n      \"asignee\": \"Reprehenderit aut labore et saepe.\",\n      \"contents\": \"Et atque recusandae esse.\",\n      \"end_date\": \"2002-05-25\",\n      \"label\": \"Ea et id.\",\n      \"start_date\": \"1985-02-15\",\n      \"status\": \"Eum atque repellendus.\",\n      \"title\": \"Doloremque distinctio voluptates.\"\n   }'")
+		}
+		err = goa.MergeErrors(err, goa.ValidateFormat("body.start_date", body.StartDate, goa.FormatDate))
+		err = goa.MergeErrors(err, goa.ValidateFormat("body.end_date", body.EndDate, goa.FormatDate))
+		if err != nil {
+			return nil, err
+		}
+	}
 	var id int
 	{
 		var v int64
@@ -77,8 +89,16 @@ func BuildUpdateTodoTaskPayload(todoserviceUpdateTodoTaskID string) (*todoservic
 			return nil, fmt.Errorf("invalid value for id, must be INT")
 		}
 	}
-	v := &todoservice.UpdateTodoTaskPayload{}
-	v.ID = id
+	v := &todoservice.UpdateTodoTaskPayload{
+		Title:     body.Title,
+		Contents:  body.Contents,
+		Status:    body.Status,
+		Label:     body.Label,
+		Asignee:   body.Asignee,
+		StartDate: body.StartDate,
+		EndDate:   body.EndDate,
+	}
+	v.ID = &id
 
 	return v, nil
 }
