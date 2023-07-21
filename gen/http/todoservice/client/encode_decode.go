@@ -222,9 +222,7 @@ func (c *Client) BuildUpdateTodoTaskRequest(ctx context.Context, v any) (*http.R
 		if !ok {
 			return nil, goahttp.ErrInvalidType("todoservice", "UpdateTodoTask", "*todoservice.UpdateTodoTaskPayload", v)
 		}
-		if p.ID != nil {
-			id = *p.ID
-		}
+		id = p.ID
 	}
 	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: UpdateTodoTaskTodoservicePath(id)}
 	req, err := http.NewRequest("PUT", u.String(), nil)

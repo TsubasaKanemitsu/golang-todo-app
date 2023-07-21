@@ -27,9 +27,9 @@ func NewTodoservice(logger *log.Logger, c config.Postgres) todoservice.Service {
 // Todoタスクを追加する。
 func (s *todoservicesrvc) AddTodoTask(ctx context.Context, p *todoservice.AddTodoTaskPayload) (res bool, err error) {
 	s.logger.Print("todoservice.addTodoTask")
-	m, err := input.ToMTodoTaskInfo(p)
+	m, err := input.ToMTodoTaskInfoForAdd(p)
 	if err != nil {
-		s.logger.Fatalf("error: input.ToMTodoTaskInfo()")
+		s.logger.Fatalf("error: input.ToMTodoTaskInfoForAdd()")
 		return false, err
 	}
 	return s.usecase.AddTodoTask(ctx, m)
@@ -84,7 +84,12 @@ func (s *todoservicesrvc) GetTodoTaskList(ctx context.Context) (res []*todoservi
 // 指定したTodoタスクを更新する。
 func (s *todoservicesrvc) UpdateTodoTask(ctx context.Context, p *todoservice.UpdateTodoTaskPayload) (res bool, err error) {
 	s.logger.Print("todoservice.UpdateTodoTask")
-	return
+	m, err := input.ToMTodoTaskInfoForUpdate(p)
+	if err != nil {
+		s.logger.Fatalf("error: input.ToMTodoTaskInfoForUpdate()")
+		return false, err
+	}
+	return s.usecase.UpdateTodoTask(ctx, m)
 }
 
 // 指定したTodoタスクを削除する。

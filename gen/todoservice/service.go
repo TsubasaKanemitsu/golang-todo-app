@@ -104,7 +104,7 @@ type TodoTaskTitle struct {
 // UpdateTodoTask method.
 type UpdateTodoTaskPayload struct {
 	// Todo task id
-	ID *int
+	ID int
 	// Todoタスクのタイトル
 	Title string
 	// Todoタスクの説明

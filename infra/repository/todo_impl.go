@@ -65,6 +65,17 @@ func (t *todo) GetTodoTaskList(ctx context.Context) ([]*model.TodoTaskTitle, err
 	return models, nil
 }
 
+func (t *todo) UpdateTodoTask(ctx context.Context, m *model.TodoTaskInfo) (bool, error) {
+	e := transfer.ToTodoTaskInfoEntity(m)
+
+	rowsAff, err := e.Update(ctx, t.DB, boil.Infer())
+	if err != nil {
+		return false, fmt.Errorf("failed to update todo task")
+	}
+	log.Printf("success to update todo task (rowsAff: %v)", rowsAff)
+	return true, nil
+}
+
 func (t *todo) DeleteTodoTask(ctx context.Context, id int) (bool, error) {
 	e, err := dbmodels.FindMTodoTask(ctx, t.DB, id)
 	if err != nil {

@@ -98,7 +98,7 @@ func BuildUpdateTodoTaskPayload(todoserviceUpdateTodoTaskBody string, todoservic
 		StartDate: body.StartDate,
 		EndDate:   body.EndDate,
 	}
-	v.ID = &id
+	v.ID = id
 
 	return v, nil
 }

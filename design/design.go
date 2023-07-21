@@ -85,7 +85,7 @@ var _ = dsl.Service("todoservice", func() {
 			dsl.Attribute("end_date", dsl.String, "Todoタスクの終了予定日", func() {
 				dsl.Format(dsl.FormatDate)
 			})
-			dsl.Required("title", "status", "start_date", "end_date")
+			dsl.Required("id", "title", "status", "start_date", "end_date")
 		})
 		dsl.HTTP(func() {
 			dsl.PUT("/todo/{id}")

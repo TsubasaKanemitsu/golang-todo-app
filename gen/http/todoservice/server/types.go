@@ -150,7 +150,7 @@ func NewUpdateTodoTaskPayload(body *UpdateTodoTaskRequestBody, id int) *todoserv
 		StartDate: *body.StartDate,
 		EndDate:   *body.EndDate,
 	}
-	v.ID = &id
+	v.ID = id
 
 	return v
 }

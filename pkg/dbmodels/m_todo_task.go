@@ -487,6 +487,8 @@ func (o *MTodoTask) Update(ctx context.Context, exec boil.ContextExecutor, colum
 		fmt.Fprintln(writer, cache.query)
 		fmt.Fprintln(writer, values)
 	}
+	fmt.Println("\n\ncache.query: ", cache.query)
+	fmt.Println("\n\nvalues: ", values)
 	var result sql.Result
 	result, err = exec.ExecContext(ctx, cache.query, values...)
 	if err != nil {
